@@ -118,18 +118,19 @@ class MainActivity : AppCompatActivity() {
                 inpStream.close()
 
                 File(activity.filesDir?.absolutePath, "wp.txt").forEachLine {
-                    if (it.isNotEmpty() && it.isNotBlank()
-                        && !it.startsWith('<') && !it.startsWith("www")
-                            && !it.startsWith("http")) {
+                    if (it.isNotEmpty() && it.isNotBlank()) {
                         try {
-                            val msgDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
-                                .parse(it.substring(0,it.indexOf(' ')))
                             val str: String = it.substring(it.indexOf('-') + 2,it.length)
-                            val msgOwner = str.substring(0,str.indexOf(':'))
-                            val msgText = str.substring(str.indexOf(':') + 1,str.length)
+                            val msgText = str.substring(str.indexOf(':') + 1,str.length).trimStart()
+                            if (!msgText.startsWith('<') && !msgText.startsWith("www") &&
+                                    !msgText.startsWith("http")) {
+                                val msgDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+                                    .parse(it.substring(0,it.indexOf(' ')))
+                                val msgOwner = str.substring(0,str.indexOf(':'))
 
-                            //activity.chat?.chatMsgList?.add(Message(msgDate, msgOwner, msgText))
-                            activity.chat?.charUsrMsgMap?.add(Message(msgDate, msgOwner, msgText))
+                                //activity.chat?.chatMsgList?.add(Message(msgDate, msgOwner, msgText))
+                                activity.chat?.charUsrMsgMap?.add(Message(msgDate, msgOwner, msgText))
+                            }
                         } catch (e: Exception) {
                             // empty handler
                         }
