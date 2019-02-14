@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                                 val msgOwner = str.substring(0,str.indexOf(':'))
 
                                 //activity.chat?.chatMsgList?.add(Message(msgDate, msgOwner, msgText))
-                                activity.chat?.charUsrMsgMap?.add(Message(msgDate, msgOwner, msgText))
+                                activity.chat?.add(Message(msgDate, msgOwner, msgText))
                             }
                         } catch (e: Exception) {
                             // empty handler
@@ -137,30 +137,19 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                if (activity.chat?.charUsrMsgMap?.size!! > 0) {
-                    ////////// WORDCLOUD BEGIN ///////////
-                    //val usrWf = WordFrequency()
-                    val wf = WordFrequency()
-                    for ((_,msgList) in activity.chat?.charUsrMsgMap!!) {
-                        for(msg in msgList) {
-                            wf.insertWord(msg.messageText)
-                            //usrWf.insertWord(msg.messageText);
-                        }
-                        //val usrWd = WordCloud(usrWf.generate(15),240,400, Color.BLACK, Color.WHITE)
-                        //usrWd.setWordColorOpacityAuto(true)
-                        //activity.chat?.chatUsrBmpList?.put(user, usrWd.generate())
-                    }
-                    val wd = WordCloud(wf.generate(30),480,480,
-                        Color.BLACK, Color.WHITE)
+                if (activity.chat?.size!! > 0) {
+                    val wd = WordCloud(activity.chat?.commonWordFreq?.generate(30),
+                        480,480, Color.BLACK, Color.WHITE)
                     wd.setWordColorOpacityAuto(true)
                     wd.setPaddingX(20)
                     wd.setPaddingY(20)
-                    activity.chat?.chatBmp = wd.generate()
-                    ////////// WORDCLOUD END ///////////
+                    activity.chat?.chatCommonWordCloud = wd.generate()
 
                     // generate barentries
-                    for ((count, usrMsg) in activity.chat?.getUserMsgList()!!.withIndex()) {
-                        barEntries.add(BarEntry(usrMsg.size.toFloat(), count))
+                    var count = 0
+                    for ((_, userObjects) in activity.chat!!) {
+                        barEntries.add(BarEntry(userObjects.usrMsgList.size.toFloat(), count))
+                        count++
                     }
 
                     // generate bardataset
@@ -168,7 +157,7 @@ class MainActivity : AppCompatActivity() {
                     barDataSet.colors = ColorTemplate.COLORFUL_COLORS.toMutableList()
 
                     // generate bardata and return
-                    return BarData(activity.chat?.charUsrMsgMap?.keys?.toTypedArray(), barDataSet)
+                    return BarData(activity.chat?.getUserNameList(), barDataSet)
                 }
             }
             return null
@@ -182,7 +171,7 @@ class MainActivity : AppCompatActivity() {
                 activity.barChart?.xAxis?.setLabelsToSkip(0)
                 activity.barChart?.invalidate()
                 activity.barChart?.visibility = View.VISIBLE
-                activity.chatWdImgView?.setImageBitmap(activity.chat?.chatBmp)
+                activity.chatWdImgView?.setImageBitmap(activity.chat?.chatCommonWordCloud)
             }
             if (pd != null) {
                 pd?.dismiss()
