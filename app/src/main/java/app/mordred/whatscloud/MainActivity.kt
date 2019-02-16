@@ -23,9 +23,10 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.mordred.wordcloud.WordCloud
-import com.mordred.wordcloud.WordFrequency
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileOutputStream
+import java.io.FileReader
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -36,11 +37,13 @@ class MainActivity : AppCompatActivity() {
     var chat: Chat? = null
     var chatTitleTv: TextView? = null
     var chatWdImgView: ImageView? = null
+    var wpChatFilePath: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        wpChatFilePath = filesDir.absolutePath + File.separator + "wp.txt"
         chatTitleTv = findViewById(R.id.chatTv)
         chatWdImgView = findViewById(R.id.chatWdImg)
         barChart = findViewById(R.id.chart)
@@ -73,8 +76,6 @@ class MainActivity : AppCompatActivity() {
 
         var pd: ProgressDialog? = null
         var barEntries: MutableList<BarEntry> = mutableListOf()
-        //var msgList: MutableList<Message> = mutableListOf()
-        //var userMsgList = UserMessage()
 
         private fun getNameFromUri(cntresolver: ContentResolver, uri: Uri): String? {
             val cursor = cntresolver.query(uri, null, null, null, null)
@@ -92,6 +93,8 @@ class MainActivity : AppCompatActivity() {
             pd = ProgressDialog(activity)
             pd?.setTitle("Processer")
             pd?.setMessage("Processing... Please wait...")
+            pd?.setIndeterminate(true)
+            pd?.setCancelable(false)
             pd?.show()
             super.onPreExecute()
         }
@@ -105,7 +108,7 @@ class MainActivity : AppCompatActivity() {
                 activity.chat = Chat("WP")
             }
             if (inpStream != null) {
-                val outputStream = FileOutputStream(File(activity.filesDir?.absolutePath, "wp.txt"))
+                val outputStream = FileOutputStream(File(activity.wpChatFilePath))
 
                 inpStream.use { input ->
                     outputStream.use { output ->
@@ -117,38 +120,56 @@ class MainActivity : AppCompatActivity() {
                 outputStream.close()
                 inpStream.close()
 
-                File(activity.filesDir?.absolutePath, "wp.txt").forEachLine {
-                    if (it.isNotEmpty() && it.isNotBlank()) {
-                        try {
-                            val str: String = it.substring(it.indexOf('-') + 2,it.length)
-                            val msgText = str.substring(str.indexOf(':') + 1,str.length).trimStart()
-                            if (!msgText.startsWith('<') && !msgText.startsWith("www") &&
-                                    !msgText.startsWith("http")) {
-                                val msgDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
-                                    .parse(it.substring(0,it.indexOf(' ')))
-                                val msgOwner = str.substring(0,str.indexOf(':'))
+                var bf: BufferedReader? = null
+                var fr: FileReader? = null
+                try {
+                    fr = FileReader(activity.wpChatFilePath)
+                    bf = BufferedReader(fr)
 
-                                //activity.chat?.chatMsgList?.add(Message(msgDate, msgOwner, msgText))
-                                activity.chat?.add(Message(msgDate, msgOwner, msgText))
+                    var currLine: String? = bf.readLine()
+                    while (currLine != null) {
+                        if (currLine.length > 18) {
+                            try {
+                                val str: String = currLine.substring(18, currLine.length).trimStart()
+                                val msgText = str.substring(str.indexOf(':') + 1, str.length).trimStart()
+                                if (!msgText.startsWith('<') && !msgText.startsWith("http")) {
+                                    val msgDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+                                        .parse(currLine.substring(0, 10).trimEnd())
+                                    val msgOwner = str.substring(0, str.indexOf(':'))
+
+                                    activity.chat?.add(Message(msgDate, msgOwner, msgText))
+                                }
+                            } catch (exception: Exception) {
+                                // empty handler
                             }
-                        } catch (e: Exception) {
-                            // empty handler
                         }
+
+                        currLine = bf.readLine()
+                    }
+                } catch (e: Exception) {
+                    // empty handler
+                } finally {
+                    try {
+                        bf?.close()
+                        fr?.close()
+                    } catch (ex: Exception) {
+                        // empty handler
                     }
                 }
 
-                if (activity.chat?.size!! > 0) {
+                if (activity.chat?.getUserSize()!! > 0) {
                     val wd = WordCloud(activity.chat?.commonWordFreq?.generate(30),
                         480,480, Color.BLACK, Color.WHITE)
                     wd.setWordColorOpacityAuto(true)
-                    wd.setPaddingX(20)
-                    wd.setPaddingY(20)
+                    wd.setPaddingX(5)
+                    wd.setPaddingY(5)
+                    wd.setBoundingYAxis(false)
                     activity.chat?.chatCommonWordCloud = wd.generate()
 
                     // generate barentries
                     var count = 0
-                    for ((_, userObjects) in activity.chat!!) {
-                        barEntries.add(BarEntry(userObjects.usrMsgList.size.toFloat(), count))
+                    activity.chat?.userMessageMap?.forEach { (_, userObjects) ->
+                        barEntries.add(BarEntry(userObjects.usrMsgCount.toFloat(), count))
                         count++
                     }
 
