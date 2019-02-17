@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.ContentResolver
 import android.content.Intent
+import android.content.res.Resources
 import android.graphics.Color
 import android.net.Uri
 import android.os.AsyncTask
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -38,12 +40,14 @@ class MainActivity : AppCompatActivity() {
     var chatTitleTv: TextView? = null
     var chatWdImgView: ImageView? = null
     var wpChatFilePath: String? = null
+    var defLang: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         wpChatFilePath = filesDir.absolutePath + File.separator + "wp.txt"
+        defLang = getCountryCode()
         chatTitleTv = findViewById(R.id.chatTv)
         chatWdImgView = findViewById(R.id.chatWdImg)
         barChart = findViewById(R.id.chart)
@@ -67,8 +71,14 @@ class MainActivity : AppCompatActivity() {
                 // application opened normally
             }
         }
+    }
 
-
+    private fun getCountryCode(): String {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Resources.getSystem().configuration.locales.get(0).language
+        } else {
+            Resources.getSystem().configuration.locale.language
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -107,6 +117,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 activity.chat = Chat("WP")
             }
+            activity.chat?.commonWordFreq?.setDefaultStopWords(activity.applicationContext, activity.defLang)
             if (inpStream != null) {
                 val wpFile = File(activity.wpChatFilePath)
                 val outputStream = FileOutputStream(wpFile)
