@@ -72,10 +72,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("StaticFieldLeak")
-    class Processer(private var activity: MainActivity) : AsyncTask<Uri, Void, BarData?>() {
-
-        var pd: ProgressDialog? = null
+    class Processer(private var activity: MainActivity) : AsyncTask<Uri, Int, BarData?>() {
         var barEntries: MutableList<BarEntry> = mutableListOf()
+        var pd: ProgressDialog = ProgressDialog(activity)
 
         private fun getNameFromUri(cntresolver: ContentResolver, uri: Uri): String? {
             val cursor = cntresolver.query(uri, null, null, null, null)
@@ -90,12 +89,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onPreExecute() {
-            pd = ProgressDialog(activity)
-            pd?.setTitle("Processer")
-            pd?.setMessage("Processing... Please wait...")
-            pd?.setIndeterminate(true)
-            pd?.setCancelable(false)
-            pd?.show()
+            pd.setTitle("Processer")
+            pd.setMessage("Processing... Please wait...")
+            pd.setCancelable(false)
+            pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+            pd.max = 100
+            pd.progress = 0
+            pd.show()
             super.onPreExecute()
         }
 
@@ -108,7 +108,8 @@ class MainActivity : AppCompatActivity() {
                 activity.chat = Chat("WP")
             }
             if (inpStream != null) {
-                val outputStream = FileOutputStream(File(activity.wpChatFilePath))
+                val wpFile = File(activity.wpChatFilePath)
+                val outputStream = FileOutputStream(wpFile)
 
                 inpStream.use { input ->
                     outputStream.use { output ->
@@ -119,6 +120,9 @@ class MainActivity : AppCompatActivity() {
                 outputStream.flush()
                 outputStream.close()
                 inpStream.close()
+
+                val sizeOfWpFile = wpFile.length()
+                var sizeOfLine = 0L
 
                 var bf: BufferedReader? = null
                 var fr: FileReader? = null
@@ -139,6 +143,8 @@ class MainActivity : AppCompatActivity() {
 
                                     activity.chat?.add(Message(msgDate, msgOwner, msgText))
                                 }
+                                sizeOfLine += currLine.toByteArray().size.toLong()
+                                publishProgress(((sizeOfLine.toFloat() / sizeOfWpFile) * 100).toInt())
                             } catch (exception: Exception) {
                                 // empty handler
                             }
@@ -184,6 +190,11 @@ class MainActivity : AppCompatActivity() {
             return null
         }
 
+        override fun onProgressUpdate(vararg values: Int?) {
+            pd.progress = values[0] as Int
+            super.onProgressUpdate(*values)
+        }
+
         override fun onPostExecute(result: BarData?) {
             if (result != null) {
                 activity.chatTitleTv?.text = activity.chat?.chatTitle
@@ -194,9 +205,7 @@ class MainActivity : AppCompatActivity() {
                 activity.barChart?.visibility = View.VISIBLE
                 activity.chatWdImgView?.setImageBitmap(activity.chat?.chatCommonWordCloud)
             }
-            if (pd != null) {
-                pd?.dismiss()
-            }
+            pd.dismiss()
             super.onPostExecute(result)
         }
     }
