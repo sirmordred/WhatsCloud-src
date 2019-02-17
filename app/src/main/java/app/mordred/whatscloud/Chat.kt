@@ -2,6 +2,7 @@ package app.mordred.whatscloud
 
 import android.graphics.Bitmap
 import com.mordred.wordcloud.WordFrequency
+import java.util.*
 
 class Chat(chatTitle: String) {
     var chatTitle: String = ""
@@ -9,12 +10,18 @@ class Chat(chatTitle: String) {
     var chatCommonWordCloud: Bitmap? = null
     var chatUserWordCloudList: MutableMap<String, Bitmap> = mutableMapOf()
     var userMessageMap: HashMap<String, User> = HashMap()
+    var chatFirstMsgDate: Date? = null
+    var chatLastMsgDate: Date? = null
 
     init {
         this.chatTitle = chatTitle
     }
 
     fun add(msg: Message) {
+        if (chatFirstMsgDate == null) {
+            chatFirstMsgDate = msg.messageDate
+        }
+        chatLastMsgDate = msg.messageDate
         commonWordFreq.insertWordNonNormalized(msg.messageText) // add msg to common word freq generator
         val usr = userMessageMap[msg.messageOwner]
         if (usr != null) {
