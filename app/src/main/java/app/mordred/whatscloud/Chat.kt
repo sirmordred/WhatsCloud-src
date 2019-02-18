@@ -22,7 +22,7 @@ class Chat(chatTitle: String) {
             chatFirstMsgDate = msg.messageDate
         }
         chatLastMsgDate = msg.messageDate
-        commonWordFreq.insertWordNonNormalized(msg.messageText) // add msg to common word freq generator
+        commonWordFreq.insertWordSemiNormalized(msg.messageText) // add msg to common word freq generator
         val usr = userMessageMap[msg.messageOwner]
         if (usr != null) {
             // add to usermessage

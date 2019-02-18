@@ -25,10 +25,7 @@ import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.mordred.wordcloud.WordCloud
-import java.io.BufferedReader
-import java.io.File
-import java.io.FileOutputStream
-import java.io.FileReader
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,14 +36,12 @@ class MainActivity : AppCompatActivity() {
     var chat: Chat? = null
     var chatTitleTv: TextView? = null
     var chatWdImgView: ImageView? = null
-    var wpChatFilePath: String? = null
     var defLang: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        wpChatFilePath = filesDir.absolutePath + File.separator + "wp.txt"
         defLang = getCountryCode()
         chatTitleTv = findViewById(R.id.chatTv)
         chatWdImgView = findViewById(R.id.chatWdImg)
@@ -111,6 +106,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg p0: Uri): BarData? {
             val inpStream = activity.contentResolver?.openInputStream(p0[0])
+
             val chatName = getNameFromUri(activity.contentResolver, p0[0])
             if (chatName != null) {
                 activity.chat = Chat(chatName)
@@ -118,29 +114,13 @@ class MainActivity : AppCompatActivity() {
                 activity.chat = Chat("WP")
             }
             activity.chat?.commonWordFreq?.setDefaultStopWords(activity.applicationContext, activity.defLang)
+
             if (inpStream != null) {
-                val wpFile = File(activity.wpChatFilePath)
-                val outputStream = FileOutputStream(wpFile)
-
-                inpStream.use { input ->
-                    outputStream.use { output ->
-                        input.copyTo(output)
-                    }
-                }
-
-                outputStream.flush()
-                outputStream.close()
-                inpStream.close()
-
-                val sizeOfWpFile = wpFile.length()
+                val sizeOfWpFile = inpStream.available()
                 var sizeOfLine = 0L
 
-                var bf: BufferedReader? = null
-                var fr: FileReader? = null
+                val bf = BufferedReader(InputStreamReader(inpStream))
                 try {
-                    fr = FileReader(activity.wpChatFilePath)
-                    bf = BufferedReader(fr)
-
                     var currLine: String? = bf.readLine()
                     while (currLine != null) {
                         if (currLine.length > 18) {
@@ -167,8 +147,8 @@ class MainActivity : AppCompatActivity() {
                     // empty handler
                 } finally {
                     try {
-                        bf?.close()
-                        fr?.close()
+                        bf.close()
+                        inpStream.close()
                     } catch (ex: Exception) {
                         // empty handler
                     }
