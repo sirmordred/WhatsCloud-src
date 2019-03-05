@@ -26,6 +26,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.mordred.wordcloud.WordCloud
 import java.io.*
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -81,6 +82,11 @@ class MainActivity : AppCompatActivity() {
         var barEntries: MutableList<BarEntry> = mutableListOf()
         var pd: ProgressDialog = ProgressDialog(activity)
 
+        val availableDateFormats = arrayOf(SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH),
+            SimpleDateFormat("dd/MM/yy", Locale.ENGLISH),
+            SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH),
+            SimpleDateFormat("dd.MM.yy", Locale.ENGLISH))
+
         private fun getNameFromUri(cntresolver: ContentResolver, uri: Uri): String? {
             val cursor = cntresolver.query(uri, null, null, null, null)
             if (cursor != null) {
@@ -119,18 +125,44 @@ class MainActivity : AppCompatActivity() {
                 val sizeOfWpFile = inpStream.available()
                 var sizeOfLine = 0L
 
+                var msgDelimIndex: Int? = null
+                var dateDelimIndex: Int? = null
+                var msgDateFormat: SimpleDateFormat? = null
+
                 val bf = BufferedReader(InputStreamReader(inpStream))
                 try {
                     var currLine: String? = bf.readLine()
                     while (currLine != null) {
                         if (currLine.length > 18) {
                             try {
-                                val str: String = currLine.substring(18, currLine.length).trimStart()
-                                val msgText = str.substring(str.indexOf(':') + 1, str.length).trimStart()
+                                if (msgDelimIndex == null) {
+                                    msgDelimIndex = currLine.indexOf('-') + 2
+                                }
+                                if (dateDelimIndex == null) {
+                                    dateDelimIndex = currLine.indexOf(' ')
+                                }
+                                if (msgDateFormat == null) {
+                                    for (dateFormat in availableDateFormats) {
+                                        try {
+                                            dateFormat.parse(currLine.substring(0, dateDelimIndex))
+                                            msgDateFormat = dateFormat
+                                            break
+                                        } catch (ex: ParseException) {
+                                            // empty handler
+                                        }
+                                    }
+                                }
+
+                                val str: String = currLine.substring(msgDelimIndex, currLine.length)
+                                val msgTextDelimIndex = str.indexOf(':')
+                                val msgText = str.substring(msgTextDelimIndex + 2, str.length)
                                 if (!msgText.startsWith('<') && !msgText.startsWith("http")) {
-                                    val msgDate = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
-                                        .parse(currLine.substring(0, 10).trimEnd())
-                                    val msgOwner = str.substring(0, str.indexOf(':'))
+                                    val msgDate: Date = if (msgDateFormat != null) {
+                                        msgDateFormat.parse(currLine.substring(0, dateDelimIndex))
+                                    } else {
+                                        Calendar.getInstance().time
+                                    }
+                                    val msgOwner = str.substring(0, msgTextDelimIndex)
 
                                     activity.chat?.add(Message(msgDate, msgOwner, msgText))
                                 }
