@@ -125,8 +125,6 @@ class MainActivity : AppCompatActivity() {
                 val sizeOfWpFile = inpStream.available()
                 var sizeOfLine = 0L
 
-                var msgDelimIndex: Int? = null
-                var dateDelimIndex: Int? = null
                 var msgDateFormat: SimpleDateFormat? = null
 
                 val bf = BufferedReader(InputStreamReader(inpStream))
@@ -135,16 +133,10 @@ class MainActivity : AppCompatActivity() {
                     while (currLine != null) {
                         if (currLine.length > 18) {
                             try {
-                                if (msgDelimIndex == null) {
-                                    msgDelimIndex = currLine.indexOf('-') + 2
-                                }
-                                if (dateDelimIndex == null) {
-                                    dateDelimIndex = currLine.indexOf(' ')
-                                }
                                 if (msgDateFormat == null) {
                                     for (dateFormat in availableDateFormats) {
                                         try {
-                                            dateFormat.parse(currLine.substring(0, dateDelimIndex))
+                                            dateFormat.parse(currLine.substring(0, currLine.indexOf(' ')))
                                             msgDateFormat = dateFormat
                                             break
                                         } catch (ex: ParseException) {
@@ -153,12 +145,12 @@ class MainActivity : AppCompatActivity() {
                                     }
                                 }
 
-                                val str: String = currLine.substring(msgDelimIndex, currLine.length)
+                                val str: String = currLine.substring(currLine.indexOf('-') + 2, currLine.length)
                                 val msgTextDelimIndex = str.indexOf(':')
                                 val msgText = str.substring(msgTextDelimIndex + 2, str.length)
                                 if (!msgText.startsWith('<') && !msgText.startsWith("http")) {
                                     val msgDate: Date = if (msgDateFormat != null) {
-                                        msgDateFormat.parse(currLine.substring(0, dateDelimIndex))
+                                        msgDateFormat.parse(currLine.substring(0, currLine.indexOf(' ')))
                                     } else {
                                         Calendar.getInstance().time
                                     }
