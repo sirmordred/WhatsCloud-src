@@ -3,11 +3,15 @@ package app.mordred.whatscloud
 import com.mordred.wordcloud.WordFrequency
 import java.util.*
 
-class User {
-    //var usrMsgWordFreq: WordFrequency = WordFrequency()
+class User(usrMsgWordFrequency: WordFrequency) {
+    var usrMsgWordFreq: WordFrequency? = null
     var usrMsgCount: Int = 0
     var firstMsgDate: Date? = null
     var lastMsgDate: Date? = null
+
+    init {
+        usrMsgWordFreq = usrMsgWordFrequency
+    }
 
     fun addMsg(msg: Message) {
         usrMsgCount++
@@ -15,6 +19,6 @@ class User {
             firstMsgDate = msg.messageDate
         }
         lastMsgDate = msg.messageDate
-        //usrMsgWordFreq.insertWord(msg.messageText)
+        usrMsgWordFreq?.insertWordSemiNormalized(msg.messageText)
     }
 }

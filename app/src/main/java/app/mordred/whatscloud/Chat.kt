@@ -1,23 +1,31 @@
 package app.mordred.whatscloud
 
 import android.graphics.Bitmap
+import app.mordred.whatscloud.view.ResultActivity
 import com.mordred.wordcloud.WordFrequency
 import java.util.*
 
-class Chat(chatTitle: String) {
+class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String) {
     var chatTitle: String = ""
     var commonWordFreq = WordFrequency()
     var chatCommonWordCloud: Bitmap? = null
-    var chatUserWordCloudList: MutableMap<String, Bitmap> = mutableMapOf()
     var userMessageMap: HashMap<String, User> = HashMap()
     var chatFirstMsgDate: Date? = null
     var chatLastMsgDate: Date? = null
+    var chatTotalMsgCount: Int = 0
+    var activity: ResultActivity? = null
+    var defStopWordLang: String? = null
 
     init {
         this.chatTitle = chatTitle
+        this.activity = activity
+        this.defStopWordLang = defStopWordLang
+
+        commonWordFreq.setDefaultStopWords(this.activity, this.defStopWordLang)
     }
 
     fun add(msg: Message) {
+        chatTotalMsgCount++
         if (chatFirstMsgDate == null) {
             chatFirstMsgDate = msg.messageDate
         }
@@ -29,7 +37,9 @@ class Chat(chatTitle: String) {
             usr.addMsg(msg)
         } else {
             // add new usermessagelist
-            val tempUser = User()
+            val userWordFreq = WordFrequency()
+            userWordFreq.setDefaultStopWords(activity, defStopWordLang)
+            val tempUser = User(userWordFreq)
             tempUser.addMsg(msg)
             userMessageMap[msg.messageOwner] = tempUser
         }

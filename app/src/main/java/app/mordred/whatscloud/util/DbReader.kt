@@ -1,4 +1,4 @@
-package app.mordred.whatscloud
+package app.mordred.whatscloud.util
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
