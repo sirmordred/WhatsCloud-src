@@ -2,9 +2,11 @@ package app.mordred.whatscloud.view
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -27,6 +29,7 @@ class ResultActivity : AppCompatActivity() {
     var chatExpandLayout: ExpandableWeightLayout? = null
     var chatUsrListRecyclerView: RecyclerView? = null
     var defLang: String = ""
+    var isExpandShowing = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +45,10 @@ class ResultActivity : AppCompatActivity() {
         chatUsrListRecyclerView = findViewById(R.id.chat_userlist_recyclerview)
         chatUsrListRecyclerView?.layoutManager = LinearLayoutManager(this)
 
+
         chatExpandLayout = findViewById(R.id.expandableLayout)
         chatTitleTv?.setOnClickListener {
+            toggleDropDownTextview(chatTitleTv)
             chatExpandLayout?.toggle()
         }
 
@@ -68,6 +73,16 @@ class ResultActivity : AppCompatActivity() {
             Resources.getSystem().configuration.locales.get(0).language
         } else {
             Resources.getSystem().configuration.locale.language
+        }
+    }
+
+    private fun toggleDropDownTextview(tv: TextView?) {
+        isExpandShowing = if (isExpandShowing) {
+            tv?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_collapse, 0)
+            false
+        } else {
+            tv?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_expand, 0)
+            true
         }
     }
 }
