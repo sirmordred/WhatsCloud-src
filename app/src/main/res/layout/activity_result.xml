@@ -10,15 +10,14 @@
         tools:context=".view.ResultActivity">
 
     <TextView
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="9dp"
             android:id="@+id/chatTv"
             android:text="Whatsapp Chat"
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/black"
+            android:background="@android:color/darker_gray"
             android:layout_weight="0.10"
             android:layout_width="match_parent"
             android:layout_height="0dp"/>
@@ -28,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.65"
-            android:background="@android:color/holo_green_dark"
+            android:background="@android:color/darker_gray"
             app:ael_duration="750"
             app:ael_interpolator="anticipateOvershoot"
             app:ael_expanded="false">
@@ -38,6 +37,10 @@
                 android:layout_height="wrap_content">
 
             <LinearLayout
+                    android:layout_marginTop="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -47,6 +50,7 @@
                         android:layout_marginBottom="12dp"
                         android:id="@+id/chart"
                         android:layout_width="match_parent"
+                        android:background="@android:color/white"
                         android:layout_height="400dp" />
 
                 <TextView
@@ -55,6 +59,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/chart"
+                        android:background="@android:color/white"
                         android:layout_marginBottom="12dp"
                         android:textSize="16sp"/>
 
@@ -63,6 +68,7 @@
                         android:id="@+id/tv_chat_msgfreq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@android:color/white"
                         android:layout_below="@id/tv_chat_msgcount"
                         android:layout_marginBottom="12dp"
                         android:textSize="16sp"/>
@@ -70,6 +76,7 @@
                 <ImageView
                         android:id="@+id/chatWdImg"
                         android:adjustViewBounds="true"
+                        android:background="@android:color/white"
                         android:layout_below="@id/tv_chat_msgfreq"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>

@@ -18,7 +18,7 @@ class UserListAdapter(val items : ArrayList<UserListItem>, val context: Context)
     override fun onBindViewHolder(p0: ViewHolder, p1: Int) {
         p0.tvUserName?.text = items[p1].usrName
         p0.tvUserMsgCount?.text =  "Total Message Count: " + items[p1].usrMsgCount.toString()
-        p0.tvUserMsgFreq?.text = "Message Sending Frequency: " + String.format("%.5f", items[p1].usrMsgFreq) + " Msg/Day"
+        p0.tvUserMsgFreq?.text = "Message Sending Frequency: " + items[p1].usrMsgFreq.toString() + " Msg/Day"
         p0.imgvUserWordcloud?.setImageBitmap(items[p1].usrWordCloud)
     }
 

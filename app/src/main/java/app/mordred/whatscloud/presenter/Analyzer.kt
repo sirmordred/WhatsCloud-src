@@ -39,7 +39,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     var chat: Chat? = null
     val resultUserList: ArrayList<UserListItem> = ArrayList()
     var chatMsgCount: Int = 0
-    var chatMsgFreq: Float = 0f
+    var chatMsgFreq: Int = 0
 
     val availableDateFormats = arrayOf(
         SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH),
@@ -157,7 +157,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                 if (diffInDaysChat == 0f) {
                     diffInDaysChat = 1f // Avoid zero-division
                 }
-                chatMsgFreq = chatMsgCount / diffInDaysChat
+                chatMsgFreq = Math.round(chatMsgCount / diffInDaysChat)
 
                 // generate barentries
                 var count = 0
@@ -178,7 +178,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     if (diffInDays == 0f) {
                         diffInDays = 1f // Avoid zero-division
                     }
-                    val userobjectMsgFreq: Float = userObject.usrMsgCount / diffInDays
+                    val userobjectMsgFreq: Int = Math.round(userObject.usrMsgCount / diffInDays)
 
                     resultUserList.add(UserListItem(
                         userName,
@@ -216,7 +216,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.barChart?.invalidate()
             activity.barChart?.visibility = View.VISIBLE
             activity.chatMsgCountTv?.text = "Total Message Count: " + chatMsgCount.toString()
-            activity.chatMsgFreqTv?.text = "Message Sending Frequency: " + String.format("%.5f", chatMsgFreq) + " Msg/Day"
+            activity.chatMsgFreqTv?.text = "Message Sending Frequency: " + chatMsgFreq.toString() + " Msg/Day"
             activity.chatWdImgView?.setImageBitmap(chat?.chatCommonWordCloud)
             activity.chatUsrListRecyclerView?.adapter = UserListAdapter(resultUserList, activity)
         }
