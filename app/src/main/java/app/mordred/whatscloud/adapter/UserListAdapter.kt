@@ -9,7 +9,7 @@ import app.mordred.whatscloud.R
 import app.mordred.whatscloud.model.UserListItem
 import kotlinx.android.synthetic.main.user_list_item.view.*
 
-class UserListAdapter(val items : ArrayList<UserListItem>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
+class UserListAdapter(val items : ArrayList<UserListItem>, val context: Context) : RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.user_list_item, p0, false))
@@ -26,12 +26,12 @@ class UserListAdapter(val items : ArrayList<UserListItem>, val context: Context)
     override fun getItemCount(): Int {
         return items.size
     }
-}
 
-class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
-    val tvUserName = view.tv_username
-    val tvUserMsgCount = view.tv_user_msgcount
-    val tvUserMsgFreq = view.tv_user_msgfreq
-    val imgvUserWordcloud = view.imgv_user_wordcloud
+    class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+        // Holds the TextView that will add each animal to
+        val tvUserName = view.tv_username
+        val tvUserMsgCount = view.tv_user_msgcount
+        val tvUserMsgFreq = view.tv_user_msgfreq
+        val imgvUserWordcloud = view.imgv_user_wordcloud
+    }
 }

@@ -1,6 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                             android:layout_width="match_parent"
-                                             android:layout_height="match_parent">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".view.ResultActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+            android:id="@+id/llWordNum"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:text="Number of words in wordcloud"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"/>
+        <TextView
+                android:text="30"
+                android:textSize="20sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvWordNumVal"/>
+
+    </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_marginBottom="12dp"
+          android:background="@android:color/darker_gray"
+          android:layout_height="1dp"/>
+
+    <TextView
+            android:text="Custom stopwords"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="4dp"/>
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:weightSum="1"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="Enter your stopword here"
+                android:ems="10"
+                android:id="@+id/edxStopWord"
+                android:layout_weight="0.8"/>
+        <TextView
+                android:text="+"
+                android:gravity="center"
+                android:textSize="64sp"
+                android:layout_weight="0.2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+
+            android:id="@+id/rv_stopword_list"
+            android:layout_marginBottom="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+</LinearLayout>
