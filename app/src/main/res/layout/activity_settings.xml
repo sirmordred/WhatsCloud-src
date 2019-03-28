@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".view.ResultActivity">
+        tools:context=".view.SettingsActivity">
 
     <LinearLayout
             android:id="@+id/llWordNum"
@@ -68,6 +68,11 @@
                 android:ems="10"
                 android:id="@+id/edxStopWord"
                 android:layout_weight="0.8"/>
+
+        <View
+                android:layout_width="2dp"
+                android:background="@android:color/darker_gray"
+                android:layout_height="match_parent"/>
         <TextView
                 android:text="+"
                 android:gravity="center"
