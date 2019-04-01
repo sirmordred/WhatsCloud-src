@@ -180,12 +180,14 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     }
                     val userobjectMsgFreq: Int = Math.round(userObject.usrMsgCount / diffInDays)
 
-                    resultUserList.add(UserListItem(
-                        userName,
-                        userObject.usrMsgCount,
-                        userobjectMsgFreq,
-                        placeWpBackground(activity, "wp_bg.png", wdUser.generate())!!))
-
+                    val wdUserBmp = wdUser.generate()
+                    if (wdUserBmp != null) {
+                        resultUserList.add(UserListItem(
+                            userName,
+                            userObject.usrMsgCount,
+                            userobjectMsgFreq,
+                            placeWpBackground(activity, "wp_bg.png", wdUserBmp)))
+                    }
                     barEntries.add(BarEntry(userObject.usrMsgCount.toFloat(), count))
                     count++
                 }
@@ -224,16 +226,15 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
         super.onPostExecute(result)
     }
 
-    private fun placeWpBackground(activity: ResultActivity ,baseImgFileName: String, textBmp: Bitmap): Bitmap? {
+    private fun placeWpBackground(activity: ResultActivity ,baseImgFileName: String, textBmp: Bitmap): Bitmap {
         var refBmpInp: InputStream? = null
         var refBmp: Bitmap? = null
-        var resultBmp: Bitmap? = null
         try {
             refBmpInp = activity.assets.open(baseImgFileName)
             refBmp = BitmapFactory.decodeStream(refBmpInp)
 
-            resultBmp = Bitmap.createBitmap(textBmp.width, textBmp.height, Bitmap.Config.ARGB_8888)
-            val resultBmpCnv = Canvas(resultBmp!!)
+            val resultBmp = Bitmap.createBitmap(textBmp.width, textBmp.height, Bitmap.Config.ARGB_8888)
+            val resultBmpCnv = Canvas(resultBmp)
 
             if (textBmp.height > refBmp?.height!!) {
                 val multiplyNum = textBmp.height / refBmp.height
@@ -252,12 +253,15 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             }
 
             resultBmpCnv.drawBitmap(textBmp, 0f, 0f, null)
+
+            return resultBmp
         } catch (e: Exception) {
             // empty handler
+            e.printStackTrace()
         } finally {
             refBmp?.recycle()
             refBmpInp?.close()
         }
-        return resultBmp
+        return textBmp
     }
 }
