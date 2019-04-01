@@ -15,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.presenter.Analyzer
+import com.github.aakira.expandablelayout.ExpandableLayoutListener
 import com.github.aakira.expandablelayout.ExpandableWeightLayout
 import com.github.mikephil.charting.charts.BarChart
 import java.util.*
@@ -29,7 +30,6 @@ class ResultActivity : AppCompatActivity() {
     var chatExpandLayout: ExpandableWeightLayout? = null
     var chatUsrListRecyclerView: RecyclerView? = null
     var defLang: String = ""
-    var isExpandShowing = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,9 +48,33 @@ class ResultActivity : AppCompatActivity() {
 
         chatExpandLayout = findViewById(R.id.expandableLayout)
         chatTitleTv?.setOnClickListener {
-            toggleDropDownTextview(chatTitleTv)
             chatExpandLayout?.toggle()
         }
+        chatExpandLayout?.setListener(object : ExpandableLayoutListener {
+            override fun onAnimationStart() {
+                // empty
+            }
+
+            override fun onAnimationEnd() {
+                // empty
+            }
+
+            override fun onPreOpen() {
+                // empty
+            }
+
+            override fun onPreClose() {
+                // empty
+            }
+
+            override fun onOpened() {
+                toggleDropDownTextview(chatTitleTv, true)
+            }
+
+            override fun onClosed() {
+                toggleDropDownTextview(chatTitleTv, false)
+            }
+        })
 
         barChart?.isEnabled = false
         barChart?.visibility = View.INVISIBLE
@@ -76,13 +100,11 @@ class ResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun toggleDropDownTextview(tv: TextView?) {
-        isExpandShowing = if (isExpandShowing) {
+    private fun toggleDropDownTextview(tv: TextView?, isOpened: Boolean) {
+        if (isOpened) {
             tv?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_collapse, 0)
-            false
         } else {
             tv?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_expand, 0)
-            true
         }
     }
 }
