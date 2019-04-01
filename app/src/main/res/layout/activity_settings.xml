@@ -51,6 +51,8 @@
             android:layout_marginBottom="4dp"/>
 
     <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="horizontal"
             android:layout_marginBottom="4dp"
             android:layout_marginStart="16dp"
@@ -67,6 +69,7 @@
                 android:hint="Enter your stopword here"
                 android:ems="10"
                 android:id="@+id/edxStopWord"
+                android:layout_gravity="center_horizontal|bottom"
                 android:layout_weight="0.8"/>
 
         <View

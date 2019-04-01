@@ -2,19 +2,26 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:weightSum="1"
-        android:background="#263238"
         tools:context=".view.MainActivity">
 
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimaryDark"
+            app:popupTheme="@style/CustomPopupTheme"/>
+
     <ScrollView
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.85"
+            android:background="@color/colorPrimary"
             android:orientation="vertical">
 
         <LinearLayout
@@ -26,6 +33,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="4dp"
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
@@ -33,13 +41,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step1"
-                    android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step1"/>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                     android:layout_marginStart="16dp"
@@ -52,13 +69,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step2"
-                    android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step2"/>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                     android:layout_marginStart="16dp"
@@ -71,13 +97,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step3"
-                    android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step3"/>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                     android:layout_marginStart="16dp"
@@ -90,13 +125,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step4"
-                    android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step4"/>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                     android:layout_marginStart="16dp"
@@ -109,13 +153,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step5"
-                    android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step5"/>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                     android:layout_marginStart="16dp"
@@ -128,13 +181,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step6"
-                    android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step6"/>
+
+            </android.support.v7.widget.CardView>
 
             <TextView
                     android:layout_marginStart="16dp"
@@ -147,12 +209,22 @@
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
-            <ImageView
-                    android:layout_width="wrap_content"
+            <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scaleType="fitCenter"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/step7"/>
+                    android:gravity="center"
+                    android:layout_margin="12dp"
+                    card_view:cardElevation="4dp"
+                    card_view:cardCornerRadius="8dp">
+
+                <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/step7"/>
+
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 

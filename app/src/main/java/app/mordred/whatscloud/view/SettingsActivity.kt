@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -23,6 +24,8 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
@@ -53,5 +56,19 @@ class SettingsActivity : AppCompatActivity() {
             dialogInterface.dismiss()
         }
         builder.show()
+    }
+
+    /* Triggered when use click menu item. */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Get menu item id.
+        val itemId = item.itemId
+
+        when (itemId) {
+            android.R.id.home-> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
