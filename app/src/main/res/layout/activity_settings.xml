@@ -5,6 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#26a69a"
         tools:context=".view.SettingsActivity">
 
     <LinearLayout
@@ -19,7 +20,7 @@
 
         <TextView
                 android:text="Number of words in wordcloud"
-                android:textColor="@android:color/black"
+                android:textColor="#212121"
                 android:textStyle="bold"
                 android:textSize="24sp"
                 android:layout_width="match_parent"
@@ -28,6 +29,7 @@
         <TextView
                 android:text="30"
                 android:textSize="20sp"
+                android:textColor="#424242"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvWordNumVal"/>
@@ -41,7 +43,7 @@
 
     <TextView
             android:text="Custom stopwords"
-            android:textColor="@android:color/black"
+            android:textColor="#212121"
             android:textStyle="bold"
             android:textSize="24sp"
             android:layout_width="match_parent"
@@ -67,19 +69,23 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:hint="Enter your stopword here"
+                android:textColorHint="#424242"
                 android:ems="10"
                 android:id="@+id/edxStopWord"
                 android:layout_gravity="center_horizontal|bottom"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="0.8"/>
 
         <View
                 android:layout_width="2dp"
+                android:layout_marginEnd="8dp"
                 android:background="@android:color/darker_gray"
                 android:layout_height="match_parent"/>
         <TextView
                 android:text="+"
-                android:gravity="center"
+                android:textAlignment="center"
                 android:textSize="64sp"
+                android:textStyle="bold"
                 android:layout_weight="0.2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
@@ -87,11 +93,12 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-
             android:id="@+id/rv_stopword_list"
-            android:layout_marginBottom="16dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"/>
 
 
 </LinearLayout>

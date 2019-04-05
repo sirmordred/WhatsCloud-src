@@ -14,14 +14,14 @@
             android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
             app:popupTheme="@style/CustomPopupTheme"/>
 
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.85"
-            android:background="@color/colorPrimary"
+            android:layout_weight="0.9"
+            android:background="#26a69a"
             android:orientation="vertical">
 
         <LinearLayout
@@ -237,7 +237,7 @@
             android:text="Ok got it. Let's go to WhatsApp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.1"
             android:id="@+id/btnGoToWp"/>
 
 
