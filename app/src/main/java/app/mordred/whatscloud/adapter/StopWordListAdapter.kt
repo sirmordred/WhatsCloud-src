@@ -48,9 +48,11 @@ class StopWordListAdapter(val context: Context) : RecyclerView.Adapter<StopWordL
     }
 
     fun addElementToList(element: String) {
-        items?.add(element)
-        updateSavedStopWordList()
-        notifyDataSetChanged()
+        if (!items?.contains(element)!!) {
+            items?.add(element)
+            updateSavedStopWordList()
+            notifyDataSetChanged()
+        }
     }
 
     fun updateSavedStopWordList() {
