@@ -11,15 +11,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.TextView
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.adapter.StopWordListAdapter
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
-    var customStopWordList: MutableList<String>? = null
     var sharedPref: SharedPreferences? = null
+    var stopWordEdx: EditText? = null
+    var stpWrdListAdapter: StopWordListAdapter? = null
+    var defWordCountInWd = 30
+    var tvWordCount: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,28 +32,48 @@ class SettingsActivity : AppCompatActivity() {
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
+        defWordCountInWd = sharedPref?.getInt("defWordCntInWd", 30)!!
+
+        tvWordCount = findViewById(R.id.tvWordNumVal)
+        tvWordCount?.text = defWordCountInWd.toString()
+
         val wordNumLl = findViewById<LinearLayout>(R.id.llWordNum)
         wordNumLl.setOnClickListener {
-            showTextInputDialog()
+            showWordCountInputDialog()
         }
-
-        customStopWordList  = sharedPref?.getStringSet("custStpWrds", mutableSetOf())?.toMutableList()
 
         rv_stopword_list.layoutManager = LinearLayoutManager(this)
         rv_stopword_list.addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
-        rv_stopword_list.adapter = StopWordListAdapter(customStopWordList, this)
+        stpWrdListAdapter = StopWordListAdapter(this)
+        rv_stopword_list.adapter = stpWrdListAdapter
+
+        stopWordEdx = findViewById(R.id.edxStopWord)
+
+        val addStopWordButton = findViewById<TextView>(R.id.addStopWordBtn)
+        addStopWordButton.setOnClickListener {
+            val userEnteredStopWord = stopWordEdx?.text?.toString()?.trimStart()?.trimEnd()
+            if (userEnteredStopWord != null && userEnteredStopWord.isNotEmpty() && userEnteredStopWord.isNotBlank()) {
+                stpWrdListAdapter?.addElementToList(userEnteredStopWord)
+            }
+        }
     }
 
     @SuppressLint("InflateParams")
-    private fun showTextInputDialog() {
+    private fun showWordCountInputDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
-        builder.setTitle("With EditText")
+        builder.setTitle("Number of words in wordcloud")
         val dialogLayout = inflater.inflate(R.layout.input_dialog, null)
         val editText  = dialogLayout.findViewById<EditText>(R.id.edxInputDialog)
+        editText?.setText(defWordCountInWd.toString())
         builder.setView(dialogLayout)
-        builder.setPositiveButton("OK") { _, _ ->
-            Toast.makeText(applicationContext, "EditText is " + editText.text.toString(), Toast.LENGTH_SHORT).show()
+        builder.setPositiveButton("OK") { dialogInterface, _ ->
+            val userEnteredNum = editText.text.toString().toInt()
+            if (userEnteredNum in 1..499) {
+                sharedPref?.edit()?.putInt("defWordCntInWd", userEnteredNum)?.apply()
+                tvWordCount?.text = userEnteredNum.toString()
+            }
+            dialogInterface.dismiss()
         }
         builder.setNegativeButton("Cancel") { dialogInterface, _ ->
             dialogInterface.dismiss()

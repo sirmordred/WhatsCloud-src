@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import app.mordred.whatscloud.R
 
@@ -21,6 +22,19 @@ class MainActivity : AppCompatActivity() {
 
         // Replace current action bar use toolbar.
         setSupportActionBar(toolbar)
+
+        val openWpBtn = findViewById<Button>(R.id.btnGoToWp)
+        openWpBtn.setOnClickListener {
+            val intent = packageManager.getLaunchIntentForPackage("com.whatsapp")
+            if (intent != null) {
+                // We found the activity now start the activity
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            } else {
+                Toast.makeText(applicationContext,
+                    "WhatsApp is not installed on this phone", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     /* Use custom menu items to inflate activity menu. */

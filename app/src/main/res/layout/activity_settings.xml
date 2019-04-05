@@ -82,9 +82,10 @@
                 android:background="@android:color/darker_gray"
                 android:layout_height="match_parent"/>
         <TextView
+                android:id="@+id/addStopWordBtn"
                 android:text="+"
                 android:textAlignment="center"
-                android:textSize="64sp"
+                android:textSize="48sp"
                 android:textStyle="bold"
                 android:layout_weight="0.2"
                 android:layout_width="0dp"
