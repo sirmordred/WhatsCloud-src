@@ -9,19 +9,64 @@
         android:weightSum="1"
         tools:context=".view.ResultActivity">
 
-    <TextView
-            android:id="@+id/chatTv"
-            android:text="Whatsapp Chat"
-            android:drawableRight="@mipmap/ic_expand"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/darker_gray"
+    <LinearLayout
             android:background="#00695C"
-            android:layout_weight="0.10"
+            android:id="@+id/llChatTitle"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:weightSum="1">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.90"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:weightSum="1">
+
+            <TextView
+                    android:id="@+id/chatTv"
+                    android:text="Whatsapp Chat"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_weight="0.5"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+            <TextView
+                    android:id="@+id/chatTvDate"
+                    android:text="Jun/2018 - Feb/2019"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_weight="0.5"
+                    android:layout_marginBottom="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:id="@+id/chatTitleDropDown"
+                android:src="@mipmap/ic_expand"/>
+    </LinearLayout>
+
+
 
     <com.github.aakira.expandablelayout.ExpandableWeightLayout
             android:id="@+id/expandableLayout"
@@ -91,7 +136,7 @@
     </com.github.aakira.expandablelayout.ExpandableWeightLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:layout_weight="0.90"
+            android:layout_weight="0.85"
             android:id="@+id/chat_userlist_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp" />

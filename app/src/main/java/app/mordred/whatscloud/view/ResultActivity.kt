@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.presenter.Analyzer
@@ -25,8 +26,10 @@ class ResultActivity : AppCompatActivity() {
     var chatMsgCountTv: TextView? = null
     var chatMsgFreqTv: TextView? = null
     var chatWdImgView: ImageView? = null
+    var chatTitleDropDownInd: ImageView? = null
     var chatExpandLayout: ExpandableWeightLayout? = null
     var chatUsrListRecyclerView: RecyclerView? = null
+    var chatTitleHeader: LinearLayout? = null
     var defLang: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +46,11 @@ class ResultActivity : AppCompatActivity() {
         chatUsrListRecyclerView = findViewById(R.id.chat_userlist_recyclerview)
         chatUsrListRecyclerView?.layoutManager = LinearLayoutManager(this)
 
+        chatTitleHeader = findViewById(R.id.llChatTitle)
+        chatTitleDropDownInd = findViewById(R.id.chatTitleDropDown)
 
         chatExpandLayout = findViewById(R.id.expandableLayout)
-        chatTitleTv?.setOnClickListener {
+        chatTitleHeader?.setOnClickListener {
             chatExpandLayout?.toggle()
         }
         chatExpandLayout?.setListener(object : ExpandableLayoutListener {
@@ -66,11 +71,11 @@ class ResultActivity : AppCompatActivity() {
             }
 
             override fun onOpened() {
-                toggleDropDownTextview(chatTitleTv, true)
+                toggleDropDownImgview(chatTitleDropDownInd, true)
             }
 
             override fun onClosed() {
-                toggleDropDownTextview(chatTitleTv, false)
+                toggleDropDownImgview(chatTitleDropDownInd, false)
             }
         })
 
@@ -98,11 +103,11 @@ class ResultActivity : AppCompatActivity() {
         }
     }
 
-    private fun toggleDropDownTextview(tv: TextView?, isOpened: Boolean) {
+    private fun toggleDropDownImgview(imgView: ImageView?, isOpened: Boolean) {
         if (isOpened) {
-            tv?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_collapse, 0)
+            imgView?.setImageResource(R.mipmap.ic_collapse)
         } else {
-            tv?.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.ic_expand, 0)
+            imgView?.setImageResource(R.mipmap.ic_expand)
         }
     }
 }
