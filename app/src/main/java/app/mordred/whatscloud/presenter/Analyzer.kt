@@ -10,6 +10,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.AsyncTask
 import android.provider.OpenableColumns
+import android.support.v7.widget.SearchView
 import android.view.View
 import app.mordred.whatscloud.Chat
 import app.mordred.whatscloud.Message
@@ -220,7 +221,23 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.chatMsgCountTv?.text = "Total Message Count: " + chatMsgCount.toString()
             activity.chatMsgFreqTv?.text = "Message Sending Frequency: " + chatMsgFreq.toString() + " Msg/Day"
             activity.chatWdImgView?.setImageBitmap(chat?.chatCommonWordCloud)
-            activity.chatUsrListRecyclerView?.adapter = UserListAdapter(resultUserList, activity)
+            val usrListAdapter = UserListAdapter(resultUserList, activity)
+            activity.chatUsrListRecyclerView?.adapter = usrListAdapter
+
+            // listening to search query text change
+            activity.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean {
+                    // filter recycler view when query submitted
+                    usrListAdapter.filter.filter(query)
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String): Boolean {
+                    // filter recycler view when text is changed
+                    usrListAdapter.filter.filter(query)
+                    return false
+                }
+            })
         }
         pd.dismiss()
         super.onPostExecute(result)

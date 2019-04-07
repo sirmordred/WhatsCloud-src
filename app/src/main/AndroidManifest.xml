@@ -19,7 +19,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.ResultActivity">
+        <activity
+                android:windowSoftInputMode="adjustPan"
+                android:name=".view.ResultActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
                 <category android:name="android.intent.category.DEFAULT" />

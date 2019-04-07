@@ -8,6 +8,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SearchView
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -31,6 +34,8 @@ class ResultActivity : AppCompatActivity() {
     var chatUsrListRecyclerView: RecyclerView? = null
     var chatTitleHeader: LinearLayout? = null
     var defLang: String = ""
+
+    var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +98,27 @@ class ResultActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    /* Use custom menu items to inflate activity menu. */
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.custom_search_menu, menu)
+
+        // Associate searchable configuration with the SearchView
+        searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        return true
+    }
+
+    /* Triggered when use click menu item. */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Get menu item id.
+        val id = item.itemId
+
+        //noinspection SimplifiableIfStatement
+        return if (id == R.id.action_search) {
+            true
+        } else super.onOptionsItemSelected(item)
+
     }
 
     private fun getCountryCode(): String {
