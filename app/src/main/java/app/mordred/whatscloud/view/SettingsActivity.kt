@@ -69,8 +69,9 @@ class SettingsActivity : AppCompatActivity() {
         builder.setView(dialogLayout)
         builder.setPositiveButton("OK") { dialogInterface, _ ->
             val userEnteredNum = editText.text.toString().toInt()
-            if (userEnteredNum in 1..499) {
-                sharedPref?.edit()?.putInt("defWordCntInWd", userEnteredNum)?.apply()
+            if (userEnteredNum in 1..499 && userEnteredNum != defWordCountInWd) {
+                defWordCountInWd = userEnteredNum
+                sharedPref?.edit()?.putInt("defWordCntInWd", defWordCountInWd)?.apply()
                 tvWordCount?.text = userEnteredNum.toString()
             }
             dialogInterface.dismiss()
