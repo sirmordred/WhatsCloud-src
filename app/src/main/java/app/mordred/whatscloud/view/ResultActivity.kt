@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -36,6 +37,9 @@ class ResultActivity : AppCompatActivity() {
     var defLang: String = ""
 
     var searchView: SearchView? = null
+
+    var customStopWordList: Set<String>? = null
+    var customWordCloudWordCount: Int = 30
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +90,11 @@ class ResultActivity : AppCompatActivity() {
 
         barChart?.isEnabled = false
         barChart?.visibility = View.INVISIBLE
+
+        // Get default values from sharedpref
+        val shPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        customStopWordList = shPref.getStringSet("custStpWrds", mutableSetOf())
+        customWordCloudWordCount = shPref.getInt("defWordCntInWd", 30)
 
         if (intent != null && intent?.extras != null
             && intent.action != null && intent.action == Intent.ACTION_SEND_MULTIPLE) {

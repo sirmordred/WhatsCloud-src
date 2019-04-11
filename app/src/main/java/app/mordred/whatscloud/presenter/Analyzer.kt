@@ -141,7 +141,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             }
 
             if (chat?.getUserSize()!! > 0) {
-                val wd = WordCloud(chat?.commonWordFreq?.generate(30),
+                val wd = WordCloud(chat?.commonWordFreq?.generate(activity.customWordCloudWordCount),
                     480,480, Color.BLACK, Color.TRANSPARENT)
                 wd.setWordColorOpacityAuto(true)
                 wd.setPaddingX(5)
@@ -166,7 +166,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     // TODO generate userlistitems here
 
                     // Generate user wordcloud
-                    val wdUser = WordCloud(userObject.usrMsgWordFreq?.generate(30),
+                    val wdUser = WordCloud(userObject.usrMsgWordFreq?.generate(activity.customWordCloudWordCount),
                         480,480, Color.BLACK, Color.TRANSPARENT)
                     wdUser.setWordColorOpacityAuto(true)
                     wdUser.setPaddingX(5)

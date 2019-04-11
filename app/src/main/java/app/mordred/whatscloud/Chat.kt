@@ -22,6 +22,7 @@ class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String)
         this.defStopWordLang = defStopWordLang
 
         commonWordFreq.setDefaultStopWords(this.activity, this.defStopWordLang)
+        commonWordFreq.setCustomStopWords(this.activity?.customStopWordList?.toHashSet())
     }
 
     fun add(msg: Message) {
@@ -39,6 +40,7 @@ class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String)
             // add new usermessagelist
             val userWordFreq = WordFrequency()
             userWordFreq.setDefaultStopWords(activity, defStopWordLang)
+            userWordFreq.setCustomStopWords(this.activity?.customStopWordList?.toHashSet())
             val tempUser = User(userWordFreq)
             tempUser.addMsg(msg)
             userMessageMap[msg.messageOwner] = tempUser
