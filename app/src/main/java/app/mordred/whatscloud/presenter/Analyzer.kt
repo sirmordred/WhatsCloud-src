@@ -141,6 +141,9 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             }
 
             if (chat?.getUserSize()!! > 0) {
+                chat?.chatDateInterval = getDateInterval(chat?.chatFirstMsgDate!!, chat?.chatLastMsgDate!!,
+                    Locale.getDefault())
+
                 val wd = WordCloud(chat?.commonWordFreq?.generate(activity.customWordCloudWordCount),
                     480,480, Color.BLACK, Color.TRANSPARENT)
                 wd.setWordColorOpacityAuto(true)
@@ -213,6 +216,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     override fun onPostExecute(result: Boolean) {
         if (result) {
             activity.chatTitleTv?.text = chat?.chatTitle
+            activity.chatDateIntervalTv?.text = chat?.chatDateInterval
             activity.barChart?.isEnabled = true
             activity.barChart?.data = barData
             activity.barChart?.xAxis?.setLabelsToSkip(0)
@@ -280,5 +284,18 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             refBmpInp?.close()
         }
         return textBmp
+    }
+
+    fun getDateInterval(dateStart: Date, dateEnd: Date, localLang: Locale): String {
+        val retStr = StringBuilder("")
+        val cal: Calendar = Calendar.getInstance()
+        cal.time = dateStart
+        retStr.append("(").append(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, localLang))
+            .append("/").append(cal.get(Calendar.YEAR))
+        retStr.append(" - ")
+        cal.time = dateEnd
+        retStr.append(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, localLang))
+            .append("/").append(cal.get(Calendar.YEAR)).append(")")
+        return retStr.toString()
     }
 }

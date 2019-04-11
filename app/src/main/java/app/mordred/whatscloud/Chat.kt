@@ -15,6 +15,7 @@ class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String)
     var chatTotalMsgCount: Int = 0
     var activity: ResultActivity? = null
     var defStopWordLang: String? = null
+    var chatDateInterval = ""
 
     init {
         this.chatTitle = chatTitle
