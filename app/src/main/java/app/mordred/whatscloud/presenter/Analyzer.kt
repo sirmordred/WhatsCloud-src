@@ -244,6 +244,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             })
         }
         pd.dismiss()
+        activity.adMng?.showRewardedVideoAd()
         super.onPostExecute(result)
     }
 

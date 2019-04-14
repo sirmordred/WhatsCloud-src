@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import app.mordred.whatscloud.R
+import app.mordred.whatscloud.ad.AdManager
 import app.mordred.whatscloud.presenter.Analyzer
 import com.github.aakira.expandablelayout.ExpandableLayoutListener
 import com.github.aakira.expandablelayout.ExpandableWeightLayout
@@ -42,9 +43,13 @@ class ResultActivity : AppCompatActivity() {
     var customStopWordList: Set<String>? = null
     var customWordCloudWordCount: Int = 30
 
+    var adMng: AdManager? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
+
+        adMng = AdManager(this)
 
         defLang = getCountryCode()
         chatTitleTv = findViewById(R.id.chatTv)

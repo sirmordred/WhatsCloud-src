@@ -24,14 +24,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.90"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginEnd="8dp"
                 android:weightSum="1">
 
             <TextView
+                    app:autoSizeTextType="uniform"
                     android:id="@+id/chatTv"
                     android:text="Whatsapp Chat"
                     android:gravity="center"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/darker_gray"
                     android:layout_weight="0.5"
@@ -41,6 +42,7 @@
                     android:layout_height="0dp"/>
 
             <TextView
+                    app:autoSizeTextType="uniform"
                     android:id="@+id/chatTvDate"
                     android:text="Jun/2018 - Feb/2019"
                     android:gravity="center"
@@ -107,7 +109,7 @@
                         android:background="@android:color/white"
                         android:padding="8dp"
                         android:layout_marginBottom="12dp"
-                        android:textSize="12sp"/>
+                        android:textSize="16sp"/>
 
                 <TextView
                         android:text="Message Sending Frequency: 12 Msg/Day"
@@ -118,7 +120,7 @@
                         android:layout_below="@id/tv_chat_msgcount"
                         android:padding="8dp"
                         android:layout_marginBottom="12dp"
-                        android:textSize="12sp"/>
+                        android:textSize="16sp"/>
 
                 <ImageView
                         android:id="@+id/chatWdImg"

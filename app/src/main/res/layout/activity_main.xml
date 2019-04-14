@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 1: open &quot;WhatsApp&quot;"
+                    android:text="STEP 1: Open &quot;WhatsApp&quot;"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
