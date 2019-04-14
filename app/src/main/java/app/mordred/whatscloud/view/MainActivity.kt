@@ -49,16 +49,13 @@ class MainActivity : AppCompatActivity() {
 
     /* Triggered when use click menu item. */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Get menu item id.
-        val itemId = item.itemId
-
-        when (itemId) {
-            R.id.menu_pref1 -> Toast.makeText(this, "Pref1 clicked", Toast.LENGTH_LONG).show()
-            R.id.menu_pref2 -> Toast.makeText(this, "Pref2 clicked", Toast.LENGTH_LONG).show()
-            R.id.menu_pref3 -> {
+        when (item.itemId) {
+            R.id.menu_settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
             }
+            R.id.menu_upgrd_pro -> Toast.makeText(this, "UpgradePro preference clicked", Toast.LENGTH_LONG).show()
+            R.id.menu_info_bug -> Toast.makeText(this, "Info and Bug Report preference clicked", Toast.LENGTH_LONG).show()
         }
         return super.onOptionsItemSelected(item)
     }

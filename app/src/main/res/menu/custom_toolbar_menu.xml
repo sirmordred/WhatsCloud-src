@@ -3,19 +3,19 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-            android:id="@+id/menu_pref1"
-            android:icon="@android:drawable/ic_menu_compass"
-            android:title="Pref1"
+            android:id="@+id/menu_settings"
+            android:icon="@mipmap/baseline_settings_black_48"
+            android:title="Settings"
             app:showAsAction="always" />
 
     <item
-            android:id="@+id/menu_pref2"
-            android:title="Pref2"
+            android:id="@+id/menu_upgrd_pro"
+            android:title="Upgrade to Pro"
             app:showAsAction="collapseActionView" />
 
     <item
-            android:id="@+id/menu_pref3"
-            android:title="Pref3"
+            android:id="@+id/menu_info_bug"
+            android:title="Info and Bug Reports"
             app:showAsAction="collapseActionView" />
 
 </menu>
