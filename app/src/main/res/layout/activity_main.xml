@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 1"
+                    android:text="STEP 1: open &quot;WhatsApp&quot;"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
@@ -65,7 +65,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 2"
+                    android:text="STEP 2: Select any chat you want to analyze"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 3"
+                    android:text="STEP 3: Tap to 3-dot menu icon in top-right corner of your desired chat"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
@@ -121,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 4"
+                    android:text="STEP 4: Select “More” in the dropdown menu of options"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
@@ -149,7 +149,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 5"
+                    android:text="STEP 5: Tap to &quot;Export Chat&quot; to generate the export"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
@@ -177,7 +177,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 6"
+                    android:text="STEP 6: Select &quot;Without Media&quot;"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
@@ -205,7 +205,7 @@
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:text="STEP 7"
+                    android:text="STEP 7: Send the chat to &quot;WhatsCloud&quot;"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"/>
 
