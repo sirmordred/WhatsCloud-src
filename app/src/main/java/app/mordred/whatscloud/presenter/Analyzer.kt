@@ -41,6 +41,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     val resultUserList: ArrayList<UserListItem> = ArrayList()
     var chatMsgCount: Int = 0
     var chatMsgFreq: Int = 0
+    var chatTitle: String = "WhatsApp Chat"
 
     val availableDateFormats = arrayOf(
         SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH),
@@ -48,18 +49,6 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
         SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH),
         SimpleDateFormat("dd.MM.yy", Locale.ENGLISH)
     )
-
-    private fun getNameFromUri(cntresolver: ContentResolver, uri: Uri): String? {
-        val cursor = cntresolver.query(uri, null, null, null, null)
-        if (cursor != null) {
-            val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            cursor.moveToFirst()
-            val name = cursor.getString(index)
-            cursor.close()
-            return name.removeSuffix(".txt")
-        }
-        return null
-    }
 
     override fun onPreExecute() {
         pd.setTitle("Processor")
@@ -73,16 +62,12 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     }
 
     override fun doInBackground(vararg p0: Uri): Boolean {
+        // Extract and assign chat name from given Uri
+        chatTitle = getNameFromUri(activity.contentResolver, p0[0])
+
+        chat = Chat(activity)
+
         val inpStream = activity.contentResolver?.openInputStream(p0[0])
-
-        val chatName = getNameFromUri(activity.contentResolver, p0[0])
-        val defaultStopWordLang = activity.defLang
-        chat = if (chatName != null) {
-            Chat(chatName, activity, defaultStopWordLang)
-        } else {
-            Chat("WP", activity, defaultStopWordLang)
-        }
-
         if (inpStream != null) {
             val sizeOfWpFile = inpStream.available()
             var sizeOfLine = 0L
@@ -141,7 +126,9 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             }
 
             if (chat?.getUserSize()!! > 0) {
-                chat?.chatDateInterval = getDateInterval(chat?.chatFirstMsgDate!!, chat?.chatLastMsgDate!!,
+                // Append date interval to chat title
+                chatTitle += "\n"
+                chatTitle += getDateInterval(chat?.chatFirstMsgDate!!, chat?.chatLastMsgDate!!,
                     Locale.getDefault())
 
                 val wd = WordCloud(chat?.commonWordFreq?.generate(activity.customWordCloudWordCount),
@@ -166,8 +153,6 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                 // generate barentries
                 var count = 0
                 chat?.userMessageMap?.forEach { (userName, userObject) ->
-                    // TODO generate userlistitems here
-
                     // Generate user wordcloud
                     val wdUser = WordCloud(userObject.usrMsgWordFreq?.generate(activity.customWordCloudWordCount),
                         480,480, Color.BLACK, Color.TRANSPARENT)
@@ -215,8 +200,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
 
     override fun onPostExecute(result: Boolean) {
         if (result) {
-            activity.chatTitleTv?.text = chat?.chatTitle
-            activity.chatDateIntervalTv?.text = chat?.chatDateInterval
+            activity.chatTitleTv?.text = chatTitle
             activity.barChart?.isEnabled = true
             activity.barChart?.data = barData
             activity.barChart?.xAxis?.setLabelsToSkip(0)
@@ -287,7 +271,19 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
         return textBmp
     }
 
-    fun getDateInterval(dateStart: Date, dateEnd: Date, localLang: Locale): String {
+    private fun getNameFromUri(cntresolver: ContentResolver, uri: Uri): String {
+        val cursor = cntresolver.query(uri, null, null, null, null)
+        if (cursor != null) {
+            val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            cursor.moveToFirst()
+            val name = cursor.getString(index)
+            cursor.close()
+            return name.removeSuffix(".txt")
+        }
+        return "WhatsApp Chat"
+    }
+
+    private fun getDateInterval(dateStart: Date, dateEnd: Date, localLang: Locale): String {
         val retStr = StringBuilder("")
         val cal: Calendar = Calendar.getInstance()
         cal.time = dateStart

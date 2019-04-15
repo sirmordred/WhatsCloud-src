@@ -5,8 +5,7 @@ import app.mordred.whatscloud.view.ResultActivity
 import com.mordred.wordcloud.WordFrequency
 import java.util.*
 
-class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String) {
-    var chatTitle: String = ""
+class Chat(activity: ResultActivity) {
     var commonWordFreq = WordFrequency()
     var chatCommonWordCloud: Bitmap? = null
     var userMessageMap: HashMap<String, User> = HashMap()
@@ -14,15 +13,11 @@ class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String)
     var chatLastMsgDate: Date? = null
     var chatTotalMsgCount: Int = 0
     var activity: ResultActivity? = null
-    var defStopWordLang: String? = null
-    var chatDateInterval = ""
 
     init {
-        this.chatTitle = chatTitle
         this.activity = activity
-        this.defStopWordLang = defStopWordLang
 
-        commonWordFreq.setDefaultStopWords(this.activity, this.defStopWordLang)
+        commonWordFreq.setDefaultStopWords(this.activity, this.activity?.defLang)
         commonWordFreq.setCustomStopWords(this.activity?.customStopWordList?.toHashSet())
     }
 
@@ -40,7 +35,7 @@ class Chat(chatTitle: String, activity: ResultActivity, defStopWordLang: String)
         } else {
             // add new usermessagelist
             val userWordFreq = WordFrequency()
-            userWordFreq.setDefaultStopWords(activity, defStopWordLang)
+            userWordFreq.setDefaultStopWords(activity, activity?.defLang)
             userWordFreq.setCustomStopWords(this.activity?.customStopWordList?.toHashSet())
             val tempUser = User(userWordFreq)
             tempUser.addMsg(msg)

@@ -28,7 +28,6 @@ class ResultActivity : AppCompatActivity() {
 
     var barChart: BarChart? = null
     var chatTitleTv: TextView? = null
-    var chatDateIntervalTv: TextView? = null
     var chatMsgCountTv: TextView? = null
     var chatMsgFreqTv: TextView? = null
     var chatWdImgView: ImageView? = null
@@ -53,7 +52,6 @@ class ResultActivity : AppCompatActivity() {
 
         defLang = getCountryCode()
         chatTitleTv = findViewById(R.id.chatTv)
-        chatDateIntervalTv = findViewById(R.id.chatTvDate)
         chatMsgCountTv = findViewById(R.id.tv_chat_msgcount)
         chatMsgFreqTv = findViewById(R.id.tv_chat_msgfreq)
         chatWdImgView = findViewById(R.id.chatWdImg)
