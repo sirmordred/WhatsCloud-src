@@ -6,15 +6,17 @@
             android:id="@+id/menu_settings"
             android:icon="@mipmap/baseline_settings_black_48"
             android:title="Settings"
-            app:showAsAction="always" />
+            app:showAsAction="always"/>
 
     <item
             android:id="@+id/menu_upgrd_pro"
+            android:icon="@mipmap/baseline_verified_user_black_48"
             android:title="Upgrade to Pro"
             app:showAsAction="collapseActionView" />
 
     <item
             android:id="@+id/menu_info_bug"
+            android:icon="@mipmap/baseline_info_black_48"
             android:title="Info and Bug Reports"
             app:showAsAction="collapseActionView" />
 

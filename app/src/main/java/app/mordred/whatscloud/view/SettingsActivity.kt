@@ -85,9 +85,7 @@ class SettingsActivity : AppCompatActivity() {
     /* Triggered when use click menu item. */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Get menu item id.
-        val itemId = item.itemId
-
-        when (itemId) {
+        when (item.itemId) {
             android.R.id.home-> {
                 finish()
                 return true
