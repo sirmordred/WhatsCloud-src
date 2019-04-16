@@ -17,9 +17,8 @@ import app.mordred.whatscloud.Message
 import app.mordred.whatscloud.adapter.UserListAdapter
 import app.mordred.whatscloud.model.UserListItem
 import app.mordred.whatscloud.view.ResultActivity
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.mordred.wordcloud.WordCloud
 import java.io.BufferedReader
@@ -36,6 +35,8 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     var barEntries: MutableList<BarEntry> = mutableListOf()
     var barDataSet: BarDataSet? = null
     var barData: BarData? = null
+    var pieEntries: MutableList<Entry> = mutableListOf()
+    var pieData: PieData? = null
     var pd: ProgressDialog = ProgressDialog(activity)
     var chat: Chat? = null
     val resultUserList: ArrayList<UserListItem> = ArrayList()
@@ -187,6 +188,17 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
 
                 // generate bardata and return
                 barData = BarData(chat?.getUserNameList(), barDataSet)
+
+                count = 0
+                for ((_, value) in chat?.chatDayCountMap!!) {
+                    pieEntries.add(Entry((value.toFloat() * 100) / chat?.chatTotalMsgCount!!, count))
+                    count++
+                }
+
+                val pieDataSet = PieDataSet(pieEntries, "Results")
+                pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS)
+                pieData = PieData(chat?.chatDayCountMap?.keys?.toTypedArray(), pieDataSet)
+                pieData?.setValueFormatter(PercentFormatter())
                 return true
             }
         }
@@ -206,6 +218,11 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.barChart?.xAxis?.setLabelsToSkip(0)
             activity.barChart?.invalidate()
             activity.barChart?.visibility = View.VISIBLE
+            // set data and enable piechart
+            activity.pieChart?.isEnabled = true
+            activity.pieChart?.data = pieData
+            activity.pieChart?.visibility = View.VISIBLE
+
             activity.chatMsgCountTv?.text = "Total Message Count: " + chatMsgCount.toString()
             activity.chatMsgFreqTv?.text = "Message Sending Frequency: " + chatMsgFreq.toString() + " Msg/Day"
             activity.chatWdImgView?.setImageBitmap(chat?.chatCommonWordCloud)

@@ -22,11 +22,13 @@ import app.mordred.whatscloud.presenter.Analyzer
 import com.github.aakira.expandablelayout.ExpandableLayoutListener
 import com.github.aakira.expandablelayout.ExpandableWeightLayout
 import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.charts.PieChart
 import java.util.*
 
 class ResultActivity : AppCompatActivity() {
 
     var barChart: BarChart? = null
+    var pieChart: PieChart? = null
     var chatTitleTv: TextView? = null
     var chatMsgCountTv: TextView? = null
     var chatMsgFreqTv: TextView? = null
@@ -56,6 +58,8 @@ class ResultActivity : AppCompatActivity() {
         chatMsgFreqTv = findViewById(R.id.tv_chat_msgfreq)
         chatWdImgView = findViewById(R.id.chatWdImg)
         barChart = findViewById(R.id.chart)
+        pieChart = findViewById(R.id.piechart)
+        pieChart?.setUsePercentValues(true)
 
         chatUsrListRecyclerView = findViewById(R.id.chat_userlist_recyclerview)
         chatUsrListRecyclerView?.layoutManager = LinearLayoutManager(this)
@@ -93,6 +97,8 @@ class ResultActivity : AppCompatActivity() {
             }
         })
 
+        pieChart?.isEnabled = false
+        pieChart?.visibility = View.INVISIBLE
         barChart?.isEnabled = false
         barChart?.visibility = View.INVISIBLE
 
