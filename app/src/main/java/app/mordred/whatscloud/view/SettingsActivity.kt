@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -49,7 +50,7 @@ class SettingsActivity : AppCompatActivity() {
 
         stopWordEdx = findViewById(R.id.edxStopWord)
 
-        val addStopWordButton = findViewById<TextView>(R.id.addStopWordBtn)
+        val addStopWordButton = findViewById<Button>(R.id.addStopWordBtn)
         addStopWordButton.setOnClickListener {
             val userEnteredStopWord = stopWordEdx?.text?.toString()?.trimStart()?.trimEnd()
             if (userEnteredStopWord != null && userEnteredStopWord.isNotEmpty() && userEnteredStopWord.isNotBlank()) {

@@ -56,9 +56,8 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:orientation="horizontal"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="12dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:weightSum="1"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
@@ -76,22 +75,23 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="0.8"/>
 
-        <View
-                android:layout_width="2dp"
-                android:layout_marginEnd="8dp"
-                android:background="@android:color/darker_gray"
-                android:layout_height="match_parent"/>
-        <TextView
+        <Button
                 android:id="@+id/addStopWordBtn"
                 android:text="+"
                 android:textAlignment="center"
                 android:textSize="48sp"
                 android:textStyle="bold"
+                android:background="@color/colorPrimary"
                 android:layout_weight="0.2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_marginBottom="12dp"
+          android:background="@android:color/darker_gray"
+          android:layout_height="1dp"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_stopword_list"
