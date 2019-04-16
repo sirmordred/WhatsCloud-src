@@ -28,6 +28,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.HashMap
 
 
 @SuppressLint("StaticFieldLeak")
@@ -35,6 +36,9 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     var barEntries: MutableList<BarEntry> = mutableListOf()
     var barDataSet: BarDataSet? = null
     var barData: BarData? = null
+    var hrzBarEntries: MutableList<BarEntry> = mutableListOf()
+    var hrzBarDataSet: BarDataSet? = null
+    var hrzBarData: BarData? = null
     var pieEntries: MutableList<Entry> = mutableListOf()
     var pieData: PieData? = null
     var pd: ProgressDialog = ProgressDialog(activity)
@@ -43,6 +47,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     var chatMsgCount: Int = 0
     var chatMsgFreq: Int = 0
     var chatTitle: String = "WhatsApp Chat"
+    val cal: Calendar = Calendar.getInstance()
 
     val availableDateFormats = arrayOf(
         SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH),
@@ -189,6 +194,19 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                 // generate bardata and return
                 barData = BarData(chat?.getUserNameList(), barDataSet)
 
+                //GENERATE HORIZONTAL BARCHART
+                val topDates = sortAndGetTopNVal(chat?.chatDateCountMap!!, 5)
+                count = 0
+                for ((_, value) in topDates) {
+                    hrzBarEntries.add(BarEntry(value.toFloat(), count))
+                    count++
+                }
+
+                hrzBarDataSet = BarDataSet(hrzBarEntries, "Results")
+                hrzBarDataSet?.setColors(ColorTemplate.LIBERTY_COLORS)
+                hrzBarData = BarData(topDates.keys.toTypedArray(), hrzBarDataSet)
+
+                // GENERATE PIECHART
                 count = 0
                 for ((_, value) in chat?.chatDayCountMap!!) {
                     pieEntries.add(Entry((value.toFloat() * 100) / chat?.chatTotalMsgCount!!, count))
@@ -218,6 +236,11 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.barChart?.xAxis?.setLabelsToSkip(0)
             activity.barChart?.invalidate()
             activity.barChart?.visibility = View.VISIBLE
+            // set data and enable horizontal barchart
+            activity.hrzBarChart?.isEnabled = true
+            activity.hrzBarChart?.data = hrzBarData
+            activity.hrzBarChart?.invalidate()
+            activity.hrzBarChart?.visibility = View.VISIBLE
             // set data and enable piechart
             activity.pieChart?.isEnabled = true
             activity.pieChart?.data = pieData
@@ -302,7 +325,6 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
 
     private fun getDateInterval(dateStart: Date, dateEnd: Date, localLang: Locale): String {
         val retStr = StringBuilder("")
-        val cal: Calendar = Calendar.getInstance()
         cal.time = dateStart
         retStr.append("(").append(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, localLang))
             .append("/").append(cal.get(Calendar.YEAR))
@@ -311,5 +333,19 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
         retStr.append(cal.getDisplayName(Calendar.MONTH, Calendar.LONG, localLang))
             .append("/").append(cal.get(Calendar.YEAR)).append(")")
         return retStr.toString()
+    }
+
+    // Special thanx to Kotlin.. you are life saver kotlin :)
+    private fun sortAndGetTopNVal(unsortedMap: HashMap<Date, Int>, n: Int): HashMap<String, Int> {
+        val topNPair = unsortedMap.toList().sortedByDescending { (_, value) -> value}.take(n).toMap()
+        val retMap = hashMapOf<String, Int>()
+        for ((key, value) in topNPair) {
+            cal.time = key
+            val dayName = cal.get(Calendar.DAY_OF_MONTH).toString()
+            val monthName = cal.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+            val yearName = cal.get(Calendar.YEAR).toString()
+            retMap.put("$dayName $monthName $yearName", value)
+        }
+        return retMap
     }
 }

@@ -23,11 +23,13 @@ import com.github.aakira.expandablelayout.ExpandableLayoutListener
 import com.github.aakira.expandablelayout.ExpandableWeightLayout
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.XAxis
 import java.util.*
 
 class ResultActivity : AppCompatActivity() {
 
     var barChart: BarChart? = null
+    var hrzBarChart: BarChart? = null
     var pieChart: PieChart? = null
     var chatTitleTv: TextView? = null
     var chatMsgCountTv: TextView? = null
@@ -57,7 +59,19 @@ class ResultActivity : AppCompatActivity() {
         chatMsgCountTv = findViewById(R.id.tv_chat_msgcount)
         chatMsgFreqTv = findViewById(R.id.tv_chat_msgfreq)
         chatWdImgView = findViewById(R.id.chatWdImg)
+
+        //barchart
         barChart = findViewById(R.id.chart)
+
+        //horizontal barchart
+        hrzBarChart = findViewById(R.id.horizontalBarChart)
+        val xAxis = hrzBarChart?.xAxis
+        xAxis?.setDrawGridLines(false)
+        xAxis?.position = XAxis.XAxisPosition.BOTTOM
+        xAxis?.isEnabled = true
+        xAxis?.setDrawAxisLine(false)
+
+        //piechart
         pieChart = findViewById(R.id.piechart)
         pieChart?.setUsePercentValues(true)
 
@@ -99,6 +113,8 @@ class ResultActivity : AppCompatActivity() {
 
         pieChart?.isEnabled = false
         pieChart?.visibility = View.INVISIBLE
+        hrzBarChart?.isEnabled = false
+        hrzBarChart?.visibility = View.INVISIBLE
         barChart?.isEnabled = false
         barChart?.visibility = View.INVISIBLE
 
