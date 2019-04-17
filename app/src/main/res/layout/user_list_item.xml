@@ -45,8 +45,21 @@
                 android:id="@+id/imgv_user_wordcloud"
                 android:scaleType="fitXY"
                 android:adjustViewBounds="true"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/usrHrzBarChart"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+        <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/usrPieChart"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
 
     </LinearLayout>
 

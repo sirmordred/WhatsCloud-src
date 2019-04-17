@@ -9,6 +9,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.model.UserListItem
+import com.github.mikephil.charting.components.XAxis
 import kotlinx.android.synthetic.main.user_list_item.view.*
 
 class UserListAdapter(private val items : ArrayList<UserListItem>, private val context: Context)
@@ -29,6 +30,9 @@ class UserListAdapter(private val items : ArrayList<UserListItem>, private val c
         p0.tvUserMsgCount?.text =  "Total Message Count: " + itemsFiltered?.get(p1)?.usrMsgCount.toString()
         p0.tvUserMsgFreq?.text = "Message Sending Frequency: " + itemsFiltered?.get(p1)?.usrMsgFreq.toString() + " Msg/Day"
         p0.imgvUserWordcloud?.setImageBitmap(itemsFiltered?.get(p1)?.usrWordCloud)
+        p0.hrzChartUserDateStat.data = itemsFiltered?.get(p1)?.usrHrzBarData
+        p0.hrzChartUserDateStat.invalidate()
+        p0.pieChartUserDayStat.data = itemsFiltered?.get(p1)?.usrPieData
     }
 
     override fun getItemCount(): Int {
@@ -40,6 +44,18 @@ class UserListAdapter(private val items : ArrayList<UserListItem>, private val c
         val tvUserMsgCount = view.tv_user_msgcount
         val tvUserMsgFreq = view.tv_user_msgfreq
         val imgvUserWordcloud = view.imgv_user_wordcloud
+        val hrzChartUserDateStat = view.usrHrzBarChart
+        val pieChartUserDayStat = view.usrPieChart
+
+        init {
+            val xAxis = hrzChartUserDateStat.xAxis
+            xAxis.setDrawGridLines(false)
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.isEnabled = true
+            xAxis.setDrawAxisLine(false)
+
+            pieChartUserDayStat.setUsePercentValues(true)
+        }
     }
 
     override fun getFilter(): Filter {

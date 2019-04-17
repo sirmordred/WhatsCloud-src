@@ -175,13 +175,40 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     }
                     val userobjectMsgFreq: Int = Math.round(userObject.usrMsgCount / diffInDays)
 
+                    //Generate user msg date horizontal barchart
+                    val usrHrzBarEntries: MutableList<BarEntry> = mutableListOf()
+                    val usrTopDates = sortAndGetTopNVal(userObject.usrDateCountMap, 5)
+                    var count2 = 0
+                    for ((_, value) in usrTopDates) {
+                        usrHrzBarEntries.add(BarEntry(value.toFloat(), count2))
+                        count2++
+                    }
+
+                    val usrHrzBarDataSet = BarDataSet(usrHrzBarEntries, "Results")
+                    usrHrzBarDataSet.setColors(ColorTemplate.LIBERTY_COLORS)
+                    val usrHrzBarData = BarData(usrTopDates.keys.toTypedArray(), usrHrzBarDataSet)
+
+                    //Generate user msg day piechart
+                    val usrPieEntries: MutableList<Entry> = mutableListOf()
+                    count2 = 0
+                    for ((_, value) in userObject.usrDayCountMap) {
+                        usrPieEntries.add(Entry((value.toFloat() * 100) / userObject.usrMsgCount, count2))
+                        count2++
+                    }
+
+                    val usrPieDataSet = PieDataSet(usrPieEntries, "Results")
+                    usrPieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS)
+                    val usrPieData = PieData(userObject.usrDayCountMap.keys.toTypedArray(), usrPieDataSet)
+                    usrPieData.setValueFormatter(PercentFormatter())
+
                     val wdUserBmp = wdUser.generate()
                     if (wdUserBmp != null) {
                         resultUserList.add(UserListItem(
                             userName,
                             userObject.usrMsgCount,
                             userobjectMsgFreq,
-                            placeWpBackground(activity, "wp_bg.png", wdUserBmp)))
+                            placeWpBackground(activity, "wp_bg.png", wdUserBmp),
+                            usrHrzBarData, usrPieData))
                     }
                     barEntries.add(BarEntry(userObject.usrMsgCount.toFloat(), count))
                     count++
