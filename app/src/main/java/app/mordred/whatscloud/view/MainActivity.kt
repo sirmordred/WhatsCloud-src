@@ -39,9 +39,6 @@ class MainActivity : AppCompatActivity() {
 
     /* Use custom menu items to inflate activity menu. */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Get menu inflater.
-        val menuInflater = menuInflater
-
         // Inflate the menu with custom menu items.
         menuInflater.inflate(R.menu.custom_toolbar_menu, menu)
         return super.onCreateOptionsMenu(menu)

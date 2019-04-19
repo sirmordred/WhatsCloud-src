@@ -9,7 +9,7 @@ import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -24,6 +24,7 @@ import com.github.aakira.expandablelayout.ExpandableWeightLayout
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.XAxis
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import java.util.*
 
 class ResultActivity : AppCompatActivity() {
@@ -41,7 +42,7 @@ class ResultActivity : AppCompatActivity() {
     var chatTitleHeader: LinearLayout? = null
     var defLang: String = ""
 
-    var searchView: SearchView? = null
+    var searchView: MaterialSearchView? = null
 
     var customStopWordList: Set<String>? = null
     var customWordCloudWordCount: Int = 30
@@ -51,6 +52,11 @@ class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
+
+        val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
+        setSupportActionBar(toolbar)
+
+        searchView = findViewById(R.id.search_view)
 
         adMng = AdManager(this)
 
@@ -111,6 +117,19 @@ class ResultActivity : AppCompatActivity() {
             }
         })
 
+        searchView?.setOnSearchViewListener(object : MaterialSearchView.SearchViewListener {
+            override fun onSearchViewClosed() {
+                // empty
+            }
+
+            override fun onSearchViewShown() {
+                // if expandable view is open, close it since we are searching specific user on the list view
+                if (chatExpandLayout?.isExpanded!!) {
+                    chatExpandLayout?.collapse()
+                }
+            }
+        })
+
         pieChart?.isEnabled = false
         pieChart?.visibility = View.INVISIBLE
         hrzBarChart?.isEnabled = false
@@ -140,8 +159,8 @@ class ResultActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.custom_search_menu, menu)
 
-        // Associate searchable configuration with the SearchView
-        searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        val menuItem = menu.findItem(R.id.action_search)
+        searchView?.setMenuItem(menuItem)
         return true
     }
 
@@ -155,6 +174,14 @@ class ResultActivity : AppCompatActivity() {
             true
         } else super.onOptionsItemSelected(item)
 
+    }
+
+    override fun onBackPressed() {
+        if (searchView?.isSearchOpen!!) {
+            searchView?.closeSearch()
+        } else {
+            super.onBackPressed()
+        }
     }
 
     private fun getCountryCode(): String {

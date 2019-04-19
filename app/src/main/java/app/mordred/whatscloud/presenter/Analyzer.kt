@@ -10,7 +10,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.AsyncTask
 import android.provider.OpenableColumns
-import android.support.v7.widget.SearchView
 import android.view.View
 import app.mordred.whatscloud.Chat
 import app.mordred.whatscloud.Message
@@ -20,6 +19,7 @@ import app.mordred.whatscloud.view.ResultActivity
 import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
+import com.miguelcatalan.materialsearchview.MaterialSearchView
 import com.mordred.wordcloud.WordCloud
 import java.io.BufferedReader
 import java.io.InputStream
@@ -280,7 +280,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.chatUsrListRecyclerView?.adapter = usrListAdapter
 
             // listening to search query text change
-            activity.searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            activity.searchView?.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String): Boolean {
                     // filter recycler view when query submitted
                     usrListAdapter.filter.filter(query)
