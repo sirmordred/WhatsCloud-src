@@ -56,6 +56,7 @@ class SettingsActivity : AppCompatActivity() {
             if (userEnteredStopWord != null && userEnteredStopWord.isNotEmpty() && userEnteredStopWord.isNotBlank()) {
                 stpWrdListAdapter?.addElementToList(userEnteredStopWord)
             }
+            stopWordEdx?.text?.clear()
         }
     }
 
