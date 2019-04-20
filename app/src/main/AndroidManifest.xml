@@ -38,6 +38,9 @@
 
         <activity android:name=".view.SettingsActivity">
         </activity>
+
+        <activity android:name=".view.InfoActivity">
+        </activity>
     </application>
 
 </manifest>

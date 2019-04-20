@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="#26a69a"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:background="#26a69a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="App Info"
+                    android:textColor="#212121"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            <TextView
+                    android:text="WhatsCloud is a WhatsApp group analyzer and visualyzer tool that will tell you things like: \n\t\u2022 Who is the most chitty chatty person in your group\n\t\u2022 What are the most common words\n\t\u2022 Which days are the most active during the chat period\n\t\u2022 And more..."
+                    android:maxLines="10"
+                    android:textSize="20sp"
+                    android:textColor="#424242"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_marginBottom="12dp"
+              android:background="@android:color/darker_gray"
+              android:layout_height="1dp"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="Bug Reports and Feature Requests"
+                    android:textColor="#212121"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            <TextView
+                    android:text="Grab the logs by using adb logcat, then attach that log file into your report with the following informations: Device Model, Android Version, Rom type(Stock or Custom) and send it directly to the WhatsCloud's project page which hosted on git"
+                    android:textSize="20sp"
+                    android:textColor="#424242"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:text="https://github.com/sirmordred/Privset"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginStart="8dp"
+                    android:autoLink="web"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

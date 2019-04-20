@@ -52,8 +52,12 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
             }
-            R.id.menu_upgrd_pro -> Toast.makeText(this, "UpgradePro preference clicked", Toast.LENGTH_LONG).show()
-            R.id.menu_info_bug -> Toast.makeText(this, "Info and Bug Report preference clicked", Toast.LENGTH_LONG).show()
+            R.id.menu_upgrd_pro -> Toast.makeText(this, "UpgradePro preference clicked",
+                Toast.LENGTH_LONG).show()
+            R.id.menu_info_bug -> {
+                val intent = Intent(this, InfoActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
