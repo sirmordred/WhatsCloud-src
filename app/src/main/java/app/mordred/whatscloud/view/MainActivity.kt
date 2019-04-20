@@ -1,6 +1,7 @@
 package app.mordred.whatscloud.view
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
@@ -9,7 +10,10 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
+import app.mordred.whatscloud.BuildConfig
 import app.mordred.whatscloud.R
+import android.os.Build
+import android.content.ActivityNotFoundException
 
 class MainActivity : AppCompatActivity() {
 
@@ -58,7 +62,46 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, InfoActivity::class.java)
                 startActivity(intent)
             }
+            R.id.menu_share_app -> shareApp()
+            R.id.menu_rate_app -> rateApp()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun shareApp() {
+        try {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "WhatsCloud")
+            var shareMessage = "\nLet me recommend you this application\n\n"
+            shareMessage =
+                shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+            startActivity(Intent.createChooser(shareIntent, "Choose one"))
+        } catch (e: Exception) {
+            // empty
+        }
+    }
+
+    fun rateApp() {
+        try {
+            val rateIntent = rateIntentForUrl("market://details")
+            startActivity(rateIntent)
+        } catch (e: ActivityNotFoundException) {
+            val rateIntent = rateIntentForUrl("https://play.google.com/store/apps/details")
+            startActivity(rateIntent)
+        }
+    }
+
+    private fun rateIntentForUrl(url: String): Intent {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s?id=%s", url, packageName)))
+        var flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+        flags = if (Build.VERSION.SDK_INT >= 21) {
+            flags or Intent.FLAG_ACTIVITY_NEW_DOCUMENT
+        } else {
+            flags or Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET
+        }
+        intent.addFlags(flags)
+        return intent
     }
 }

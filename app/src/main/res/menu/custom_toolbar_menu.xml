@@ -18,4 +18,14 @@
             android:title="Info and Bug Reports"
             app:showAsAction="collapseActionView" />
 
+    <item
+            android:id="@+id/menu_share_app"
+            android:title="Share App"
+            app:showAsAction="collapseActionView" />
+
+    <item
+            android:id="@+id/menu_rate_app"
+            android:title="Rate the App"
+            app:showAsAction="collapseActionView" />
+
 </menu>

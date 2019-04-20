@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"/>
             <TextView
-                    android:text="WhatsCloud is a WhatsApp group analyzer and visualyzer tool that will tell you things like: \n\t\u2022 Who is the most chitty chatty person in your group\n\t\u2022 What are the most common words\n\t\u2022 Which days are the most active during the chat period\n\t\u2022 And more..."
+                    android:text="WhatsCloud is a WhatsApp group analyzer and visualyzer tool that will tell you things like: \n\u2022 Who is the most chitty chatty person in your group\n\u2022 What are the most common words\n\u2022 Which days are the most active during the chat period\n\u2022 And more..."
                     android:maxLines="10"
                     android:textSize="20sp"
                     android:textColor="#424242"
@@ -49,6 +49,7 @@
                 android:orientation="vertical"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -69,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+            <!-- TODO link will be changed in production-->
             <TextView
                     android:text="https://github.com/sirmordred/Privset"
                     android:textSize="20sp"
