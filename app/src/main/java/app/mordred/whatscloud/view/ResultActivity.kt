@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -48,6 +49,8 @@ class ResultActivity : AppCompatActivity() {
     var customWordCloudWordCount: Int = 30
 
     var adMng: AdManager? = null
+
+    var exitAlert: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -130,6 +133,19 @@ class ResultActivity : AppCompatActivity() {
             }
         })
 
+        if (exitAlert == null) {
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Are you sure you want to exit?")
+            builder.setCancelable(false)
+            builder.setPositiveButton("Yes") { _,_ ->
+                finish()
+            }
+            builder.setNegativeButton("No") { dialog,_ ->
+                dialog.cancel()
+            }
+            exitAlert = builder.create() as AlertDialog
+        }
+
         pieChart?.isEnabled = false
         pieChart?.visibility = View.INVISIBLE
         hrzBarChart?.isEnabled = false
@@ -180,7 +196,9 @@ class ResultActivity : AppCompatActivity() {
         if (searchView?.isSearchOpen!!) {
             searchView?.closeSearch()
         } else {
-            super.onBackPressed()
+            if (!exitAlert?.isShowing!!) {
+                exitAlert?.show()
+            }
         }
     }
 
