@@ -2,6 +2,7 @@ package app.mordred.whatscloud.view
 
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -78,6 +79,7 @@ class ResultActivity : AppCompatActivity() {
         hrzBarChart = findViewById(R.id.horizontalBarChart)
         val xAxis = hrzBarChart?.xAxis
         xAxis?.setDrawGridLines(false)
+        xAxis?.textColor = Color.WHITE
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
         xAxis?.isEnabled = true
         xAxis?.setDrawAxisLine(false)

@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 // We found the activity now start the activity
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(applicationContext,
                     "WhatsApp is not installed on this phone", Toast.LENGTH_LONG).show()
