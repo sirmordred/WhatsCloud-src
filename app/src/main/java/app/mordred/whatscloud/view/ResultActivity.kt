@@ -64,6 +64,8 @@ class ResultActivity : AppCompatActivity() {
         adMng = AdManager(this)
 
         defLang = getCountryCode()
+        chatTitleHeader = findViewById(R.id.llChatTitle)
+        chatTitleHeader?.visibility = View.INVISIBLE
         chatTitleTv = findViewById(R.id.chatTv)
         chatMsgCountTv = findViewById(R.id.tv_chat_msgcount)
         chatMsgFreqTv = findViewById(R.id.tv_chat_msgfreq)
@@ -87,7 +89,6 @@ class ResultActivity : AppCompatActivity() {
         chatUsrListRecyclerView = findViewById(R.id.chat_userlist_recyclerview)
         chatUsrListRecyclerView?.layoutManager = LinearLayoutManager(this)
 
-        chatTitleHeader = findViewById(R.id.llChatTitle)
         chatTitleDropDownInd = findViewById(R.id.chatTitleDropDown)
 
         chatExpandLayout = findViewById(R.id.expandableLayout)
@@ -145,6 +146,7 @@ class ResultActivity : AppCompatActivity() {
             }
             exitAlert = builder.create() as AlertDialog
         }
+
 
         pieChart?.isEnabled = false
         pieChart?.visibility = View.INVISIBLE

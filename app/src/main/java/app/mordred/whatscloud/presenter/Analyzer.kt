@@ -293,6 +293,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     return false
                 }
             })
+            activity.chatTitleHeader?.visibility = View.VISIBLE
         }
         pd.dismiss()
         activity.adMng?.showRewardedVideoAd()
