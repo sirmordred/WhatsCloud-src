@@ -69,11 +69,19 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
 
     override fun doInBackground(vararg p0: Uri): Boolean {
         // Extract and assign chat name from given Uri
-        chatTitle = getNameFromUri(activity.contentResolver, p0[0])
+        chatTitle = if (activity.isTest) {
+            "TEST CHAT"
+        } else {
+            getNameFromUri(activity.contentResolver, p0[0])
+        }
 
         chat = Chat(activity)
 
-        val inpStream = activity.contentResolver?.openInputStream(p0[0])
+        val inpStream: InputStream? = if (!activity.isTest) {
+            activity.contentResolver?.openInputStream(p0[0])
+        } else {
+            activity.assets.open("testChat.txt")
+        }
         if (inpStream != null) {
             val sizeOfWpFile = inpStream.available()
             var sizeOfLine = 0L

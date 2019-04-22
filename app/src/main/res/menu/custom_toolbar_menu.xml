@@ -28,4 +28,9 @@
             android:title="Rate the App"
             app:showAsAction="collapseActionView" />
 
+    <item
+            android:id="@+id/menu_test_chat"
+            android:title="TestAnalyzer"
+            app:showAsAction="collapseActionView" />
+
 </menu>

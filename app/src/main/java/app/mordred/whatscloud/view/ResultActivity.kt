@@ -53,6 +53,8 @@ class ResultActivity : AppCompatActivity() {
 
     var exitAlert: AlertDialog? = null
 
+    var isTest = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
@@ -162,16 +164,25 @@ class ResultActivity : AppCompatActivity() {
         customStopWordList = shPref.getStringSet("custStpWrds", mutableSetOf())
         customWordCloudWordCount = shPref.getInt("defWordCntInWd", 30)
 
-        if (intent != null && intent?.extras != null
-            && intent.action != null && intent.action == Intent.ACTION_SEND_MULTIPLE) {
-            val inputUri: Uri = (intent.extras?.get(Intent.EXTRA_STREAM) as ArrayList<*>)[0] as Uri
-            Analyzer(this).execute(inputUri)
+
+        if (intent != null && intent?.extras != null && intent?.extras?.getBoolean("isTestAnalyzer",
+                false)!!) {
+            // TEST Case
+            isTest = true
+            Analyzer(this).execute(Uri.EMPTY)
         } else {
-            // application opened normally
-            val intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-            startActivity(intent)
-            finish()
+            // NON-TEST Case
+            if (intent != null && intent?.extras != null
+                && intent.action != null && intent.action == Intent.ACTION_SEND_MULTIPLE) {
+                val inputUri: Uri = (intent.extras?.get(Intent.EXTRA_STREAM) as ArrayList<*>)[0] as Uri
+                Analyzer(this).execute(inputUri)
+            } else {
+                // application opened normally
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+                finish()
+            }
         }
     }
 

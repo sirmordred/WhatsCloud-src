@@ -64,8 +64,15 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.menu_share_app -> shareApp()
             R.id.menu_rate_app -> rateApp()
+            R.id.menu_test_chat -> testAnalyzer()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    fun testAnalyzer() {
+        val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra("isTestAnalyzer", true)
+        startActivity(intent)
     }
 
     fun shareApp() {
