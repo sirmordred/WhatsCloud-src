@@ -9,10 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.adapter.StopWordListAdapter
 import app.mordred.whatscloud.billing.BillingManager
@@ -33,11 +30,18 @@ class SettingsActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        val bm = BillingManager(this)
+
         val customSettingLayout = findViewById<LinearLayout>(R.id.custSettingLayout)
         val exUpgrdProLayout = findViewById<ExpandableRelativeLayout>(R.id.expInAppBillingLayout)
         if(BillingManager.isPremiumApp) {
             exUpgrdProLayout.collapse()
             customSettingLayout.isEnabled = true
+        }
+
+        val upgrToProBtn = findViewById<FrameLayout>(R.id.upgrProBtnLayout)
+        upgrToProBtn.setOnClickListener {
+            bm.upgradeToPro()
         }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
