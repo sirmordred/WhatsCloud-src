@@ -15,6 +15,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.adapter.StopWordListAdapter
+import app.mordred.whatscloud.billing.BillingManager
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
@@ -30,6 +32,13 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val customSettingLayout = findViewById<LinearLayout>(R.id.custSettingLayout)
+        val exUpgrdProLayout = findViewById<ExpandableRelativeLayout>(R.id.expInAppBillingLayout)
+        if(BillingManager.isPremiumApp) {
+            exUpgrdProLayout.collapse()
+            customSettingLayout.isEnabled = true
+        }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 

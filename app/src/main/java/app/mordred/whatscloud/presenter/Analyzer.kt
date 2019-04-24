@@ -14,6 +14,7 @@ import android.view.View
 import app.mordred.whatscloud.Chat
 import app.mordred.whatscloud.Message
 import app.mordred.whatscloud.adapter.UserListAdapter
+import app.mordred.whatscloud.billing.BillingManager
 import app.mordred.whatscloud.model.UserListItem
 import app.mordred.whatscloud.view.ResultActivity
 import com.github.mikephil.charting.data.*
@@ -304,7 +305,9 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.chatTitleHeader?.visibility = View.VISIBLE
         }
         pd.dismiss()
-        activity.adMng?.showRewardedVideoAd()
+        if (!BillingManager.isPremiumApp) { // TODO there may be race conditions here, fix it in the future
+            activity.adMng?.showRewardedVideoAd()
+        }
         super.onPostExecute(result)
     }
 

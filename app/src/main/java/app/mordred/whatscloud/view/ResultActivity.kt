@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.ad.AdManager
+import app.mordred.whatscloud.billing.BillingManager
 import app.mordred.whatscloud.presenter.Analyzer
 import com.github.aakira.expandablelayout.ExpandableLayoutListener
 import com.github.aakira.expandablelayout.ExpandableWeightLayout
@@ -49,6 +50,7 @@ class ResultActivity : AppCompatActivity() {
     var customStopWordList: Set<String>? = null
     var customWordCloudWordCount: Int = 30
 
+    var billMng: BillingManager? = null
     var adMng: AdManager? = null
 
     var exitAlert: AlertDialog? = null
@@ -64,6 +66,7 @@ class ResultActivity : AppCompatActivity() {
 
         searchView = findViewById(R.id.search_view)
 
+        billMng = BillingManager(this)
         adMng = AdManager(this)
 
         defLang = getCountryCode()
@@ -231,5 +234,20 @@ class ResultActivity : AppCompatActivity() {
         } else {
             imgView?.setImageResource(R.mipmap.ic_expand)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (!billMng?.bp?.handleActivityResult(requestCode, resultCode, data)!!)
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        billMng?.updateProductStatus()
+    }
+
+    override fun onDestroy() {
+        billMng?.destroy()
+        super.onDestroy()
     }
 }

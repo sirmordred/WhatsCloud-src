@@ -10,15 +10,23 @@ android {
         applicationId "app.mordred.whatscloud"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
     buildTypes {
+        debug {
+            buildConfigField 'String', "ProductId", WhatsCloud_ProductId
+            buildConfigField 'String', "LicenceId", WhatsCloud_LicenceId
+            buildConfigField 'String', "MerchantId", WhatsCloud_MerchantId
+        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', "ProductId", WhatsCloud_ProductId
+            buildConfigField 'String', "LicenceId", WhatsCloud_LicenceId
+            buildConfigField 'String', "MerchantId", WhatsCloud_MerchantId
         }
     }
 
@@ -48,4 +56,5 @@ dependencies {
     implementation 'com.android.support:cardview-v7:28.0.0'
     implementation 'com.google.android.gms:play-services-ads:17.2.0'
     implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    implementation 'com.anjlab.android.iab.v3:library:1.0.44'
 }

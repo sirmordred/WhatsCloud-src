@@ -21,4 +21,7 @@
 #-renamesourcefileattribute SourceFile
 -keep class com.github.mikephil.charting.** { *; }
 -keep class com.mordred.wordcloud.** { *; }
+-keep class com.github.aakira.expandablelayout.** { *; }
+-keep class com.miguelcatalan.materialsearchview.** { *; }
+-keep class com.anjlab.android.iab.v3.** { *; }
 -ignorewarnings

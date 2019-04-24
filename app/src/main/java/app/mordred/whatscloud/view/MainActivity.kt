@@ -14,12 +14,17 @@ import app.mordred.whatscloud.BuildConfig
 import app.mordred.whatscloud.R
 import android.os.Build
 import android.content.ActivityNotFoundException
+import app.mordred.whatscloud.billing.BillingManager
 
 class MainActivity : AppCompatActivity() {
+
+    var bm: BillingManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        bm = BillingManager(this)
 
         // Get the toolbar component.
         val toolbar = findViewById<View>(R.id.custom_toolbar) as Toolbar
@@ -56,15 +61,15 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
             }
-            R.id.menu_upgrd_pro -> Toast.makeText(this, "UpgradePro preference clicked",
-                Toast.LENGTH_LONG).show()
+            R.id.menu_upgrd_pro -> bm?.upgradeToPro()
+            R.id.menu_undo_upgrd_pro -> bm?.undoUpgradeToPro() // TODO will be removed in production
             R.id.menu_info_bug -> {
                 val intent = Intent(this, InfoActivity::class.java)
                 startActivity(intent)
             }
             R.id.menu_share_app -> shareApp()
             R.id.menu_rate_app -> rateApp()
-            R.id.menu_test_chat -> testAnalyzer()
+            R.id.menu_test_chat -> testAnalyzer() // TODO will be removed in production
         }
         return super.onOptionsItemSelected(item)
     }
@@ -110,5 +115,20 @@ class MainActivity : AppCompatActivity() {
         }
         intent.addFlags(flags)
         return intent
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (!bm?.bp?.handleActivityResult(requestCode, resultCode, data)!!)
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bm?.updateProductStatus()
+    }
+
+    override fun onDestroy() {
+        bm?.destroy()
+        super.onDestroy()
     }
 }

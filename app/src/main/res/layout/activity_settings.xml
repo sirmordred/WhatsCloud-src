@@ -1,105 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:background="#26a69a"
         tools:context=".view.SettingsActivity">
 
-    <LinearLayout
-            android:id="@+id/llWordNum"
-            android:orientation="vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
+    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/expInAppBillingLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:layout_marginBottom="16dp"
+            app:ael_expanded="true"
+            app:ael_duration="500"
+            app:ael_interpolator="bounce"
+            app:ael_orientation="vertical">
 
         <TextView
-                android:text="Number of words in wordcloud"
+                android:id="@+id/proTv"
+                android:text="Upgrade to premium and get the following features: \n\u2022 No Ads\n\u2022 Custom setting number of words in wordclouds\n\u2022 Custom stop word/filtering word adding support"
+                android:maxLines="10"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <FrameLayout
+                android:id="@+id/upgrProBtnLayout"
+                android:layout_below="@id/proTv"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button" >
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/holo_green_dark"
+                    android:padding="8dp"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@mipmap/verified_user_black"
+                    android:gravity="center"
+                    android:text="UPGRADE NOW"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white" />
+        </FrameLayout>
+
+    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+    <LinearLayout
+            android:id="@+id/custSettingLayout"
+            android:enabled="false"
+            android:layout_below="@+id/expInAppBillingLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".view.SettingsActivity">
+
+        <LinearLayout
+                android:id="@+id/llWordNum"
+                android:orientation="vertical"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:text="Number of words in wordcloud"
+                    android:textColor="#212121"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"/>
+            <TextView
+                    android:text="30"
+                    android:textSize="20sp"
+                    android:textColor="#424242"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvWordNumVal"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_marginBottom="12dp"
+              android:background="@android:color/darker_gray"
+              android:layout_height="1dp"/>
+
+        <TextView
+                android:text="Custom stopwords"
                 android:textColor="#212121"
                 android:textStyle="bold"
                 android:textSize="24sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="4dp"/>
-        <TextView
-                android:text="30"
-                android:textSize="20sp"
-                android:textColor="#424242"
+
+        <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="16dp"
+                android:weightSum="1"
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvWordNumVal"/>
+                android:layout_height="wrap_content">
+
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="Enter your stopword here"
+                    android:textColorHint="#424242"
+                    android:ems="10"
+                    android:id="@+id/edxStopWord"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="0.8"/>
+
+            <Button
+                    android:id="@+id/addStopWordBtn"
+                    android:text="+"
+                    android:textAlignment="center"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:background="@color/colorPrimary"
+                    android:layout_weight="0.2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <View android:layout_width="match_parent"
+              android:layout_marginBottom="12dp"
+              android:background="@android:color/darker_gray"
+              android:layout_height="1dp"/>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_stopword_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"/>
+
 
     </LinearLayout>
 
-    <View android:layout_width="match_parent"
-          android:layout_marginBottom="12dp"
-          android:background="@android:color/darker_gray"
-          android:layout_height="1dp"/>
 
-    <TextView
-            android:text="Custom stopwords"
-            android:textColor="#212121"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="4dp"/>
-
-    <LinearLayout
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp"
-            android:layout_marginStart="16dp"
-            android:weightSum="1"
-            android:gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Enter your stopword here"
-                android:textColorHint="#424242"
-                android:ems="10"
-                android:id="@+id/edxStopWord"
-                android:layout_gravity="center_horizontal|bottom"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="0.8"/>
-
-        <Button
-                android:id="@+id/addStopWordBtn"
-                android:text="+"
-                android:textAlignment="center"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:background="@color/colorPrimary"
-                android:layout_weight="0.2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"/>
-
-    </LinearLayout>
-
-    <View android:layout_width="match_parent"
-          android:layout_marginBottom="12dp"
-          android:background="@android:color/darker_gray"
-          android:layout_height="1dp"/>
-
-    <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_stopword_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"/>
-
-
-</LinearLayout>
+</RelativeLayout>
