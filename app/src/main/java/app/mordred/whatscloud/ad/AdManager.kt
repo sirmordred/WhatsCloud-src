@@ -1,7 +1,7 @@
 package app.mordred.whatscloud.ad
 
 import android.support.v7.app.AppCompatActivity
-import app.mordred.whatscloud.R
+import app.mordred.whatscloud.BuildConfig
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.reward.RewardItem
@@ -13,7 +13,7 @@ class AdManager(val baseActivity: AppCompatActivity): RewardedVideoAdListener {
     var mRewardedVideoAd: RewardedVideoAd
 
     init {
-        MobileAds.initialize(baseActivity, "ca-app-pub-3940256099942544~3347511713")
+        MobileAds.initialize(baseActivity, BuildConfig.AdmobAppId)
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(baseActivity)
         mRewardedVideoAd.rewardedVideoAdListener = this
     }
@@ -53,7 +53,7 @@ class AdManager(val baseActivity: AppCompatActivity): RewardedVideoAdListener {
     }
 
     fun showRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(baseActivity.getString(R.string.admob_unit_id),
+        mRewardedVideoAd.loadAd(BuildConfig.AdmobUnitId,
             AdRequest.Builder().build())
     }
 }

@@ -20,6 +20,8 @@ android {
             buildConfigField 'String', "ProductId", WhatsCloud_ProductId
             buildConfigField 'String', "LicenceId", WhatsCloud_LicenceId
             buildConfigField 'String', "MerchantId", WhatsCloud_MerchantId
+            buildConfigField 'String', "AdmobAppId", WhatsCloud_AdmobAppId
+            buildConfigField 'String', "AdmobUnitId", WhatsCloud_AdmobUnitId
         }
         release {
             minifyEnabled true
@@ -27,6 +29,8 @@ android {
             buildConfigField 'String', "ProductId", WhatsCloud_ProductId
             buildConfigField 'String', "LicenceId", WhatsCloud_LicenceId
             buildConfigField 'String', "MerchantId", WhatsCloud_MerchantId
+            buildConfigField 'String', "AdmobAppId", WhatsCloud_AdmobAppId
+            buildConfigField 'String', "AdmobUnitId", WhatsCloud_AdmobUnitId
         }
     }
 
