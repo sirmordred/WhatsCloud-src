@@ -100,6 +100,14 @@
                             android:layout_marginBottom="12dp"
                             android:textSize="16sp"/>
 
+                    <TextView
+                            android:text="@string/most_used_words_label"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:padding="8dp"
+                            android:textSize="16sp"/>
+
                     <ImageView
                             android:id="@+id/chatWdImg"
                             android:adjustViewBounds="true"
@@ -109,11 +117,29 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
+                    <TextView
+                            android:text="@string/most_active_dates_label"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:textSize="16sp"/>
+
                     <com.github.mikephil.charting.charts.HorizontalBarChart
                             android:id="@+id/horizontalBarChart"
                             android:layout_marginBottom="12dp"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"/>
+
+                    <TextView
+                            android:text="@string/most_active_days_label"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:textSize="16sp"/>
 
                     <com.github.mikephil.charting.charts.PieChart
                             android:id="@+id/piechart"

@@ -43,4 +43,7 @@
     <string name="msg_freq_label">Message Sending Frequency: %1$s Msg/Day</string>
     <string name="main_dialog_title">Analyzing</string>
     <string name="main_dialog_desc">Please wait…</string>
+    <string name="most_used_words_label">Most used words:</string>
+    <string name="most_active_dates_label">Most active dates:</string>
+    <string name="most_active_days_label">Most active days of the week:</string>
 </resources>

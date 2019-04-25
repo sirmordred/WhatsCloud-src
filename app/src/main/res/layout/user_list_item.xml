@@ -41,6 +41,13 @@
                 android:layout_marginBottom="8dp"
                 android:textSize="16sp"/>
 
+        <TextView
+                android:text="@string/most_used_words_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="16sp"/>
+
         <ImageView
                 android:id="@+id/imgv_user_wordcloud"
                 android:scaleType="fitXY"
@@ -49,11 +56,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+        <TextView
+                android:text="@string/most_active_dates_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="16sp"/>
+
         <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/usrHrzBarChart"
                 android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
+
+        <TextView
+                android:text="@string/most_active_days_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textSize="16sp"/>
 
         <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/usrPieChart"
