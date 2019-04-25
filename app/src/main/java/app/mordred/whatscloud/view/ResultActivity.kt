@@ -143,17 +143,16 @@ class ResultActivity : AppCompatActivity() {
 
         if (exitAlert == null) {
             val builder = AlertDialog.Builder(this)
-            builder.setMessage("Are you sure you want to exit?")
+            builder.setMessage(getString(R.string.dialog_exit_title))
             builder.setCancelable(false)
-            builder.setPositiveButton("Yes") { _,_ ->
+            builder.setPositiveButton(getString(R.string.dialog_yes_label)) { _,_ ->
                 finish()
             }
-            builder.setNegativeButton("No") { dialog,_ ->
+            builder.setNegativeButton(getString(R.string.dialog_no_label)) { dialog,_ ->
                 dialog.cancel()
             }
             exitAlert = builder.create() as AlertDialog
         }
-
 
         pieChart?.isEnabled = false
         pieChart?.visibility = View.INVISIBLE

@@ -22,7 +22,7 @@
 
         <TextView
                 android:id="@+id/proTv"
-                android:text="Upgrade to premium and get the following features: \n\u2022 No Ads\n\u2022 Custom setting number of words in wordclouds\n\u2022 Custom stop word/filtering word adding support"
+                android:text="@string/pro_upgrade_desc"
                 android:maxLines="10"
                 android:textSize="16sp"
                 android:textColor="@android:color/white"
@@ -52,7 +52,7 @@
                     android:drawablePadding="8dp"
                     android:drawableLeft="@mipmap/verified_user_black"
                     android:gravity="center"
-                    android:text="Upgrade now"
+                    android:text="@string/pro_upgrade_label"
                     android:textSize="16sp"
                     android:textColor="@android:color/white" />
         </FrameLayout>
@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content">
 
             <TextView
-                    android:text="Number of words in wordcloud"
+                    android:text="@string/numof_word_label"
                     android:textColor="#212121"
                     android:textStyle="bold"
                     android:textSize="24sp"
@@ -100,7 +100,7 @@
               android:layout_height="1dp"/>
 
         <TextView
-                android:text="Custom stopwords"
+                android:text="@string/stopword_title"
                 android:textColor="#212121"
                 android:textStyle="bold"
                 android:textSize="24sp"
@@ -125,7 +125,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:hint="Enter your stopword here"
+                    android:hint="@string/stopword_hint"
                     android:textColorHint="#424242"
                     android:ems="10"
                     android:id="@+id/edxStopWord"

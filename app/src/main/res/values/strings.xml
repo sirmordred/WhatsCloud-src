@@ -1,3 +1,46 @@
 <resources>
     <string name="app_name">WhatsCloud</string>
+    <string name="tuto_step1">STEP 1: Open &quot;WhatsApp&quot;</string>
+    <string name="tuto_step2">STEP 2: Select any chat you want to analyze</string>
+    <string name="tuto_step3">STEP 3: Tap to 3-dot menu icon in top-right corner of your desired chat</string>
+    <string name="tuto_step4">STEP 4: Select “More” in the dropdown menu of options</string>
+    <string name="tuto_step5">STEP 5: Tap to &quot;Export Chat&quot; to generate the export</string>
+    <string name="tuto_step6">STEP 6: Select &quot;Without Media&quot;</string>
+    <string name="tuto_step7">STEP 7: Send the chat to &quot;WhatsCloud&quot;</string>
+    <string name="goto_wp">Ok got it. Let\'s go to WhatsApp</string>
+    <string name="app_info_title">App Info</string>
+    <string name="app_info_desc">WhatsCloud is a WhatsApp group analyzer and visualyzer tool that will tell you things
+        like: \n\u2022 Who is the most chitty chatty person in your group\n\u2022 What are the most common words\n\u2022
+        Which days are the most active during the chat period\n\u2022 And more…</string>
+    <string name="bug_report_title">Bug Reports and Feature Requests</string>
+    <string name="bug_report_desc">Grab the logs by using adb logcat, then attach that log file into your report with
+        the following informations: Device Model, Android Version, Rom type(Stock or Custom) and send it directly to
+        the WhatsCloud\'s project page which hosted on git</string>
+    <string name="pro_upgrade_desc">Upgrade to premium and get the following
+        features: \n\u2022 No Ads\n\u2022 Custom setting number of words in wordclouds\n\u2022 Custom
+        stop word/filtering word adding support</string>
+    <string name="pro_upgrade_label">Upgrade now</string>
+    <string name="numof_word_label">Number of words in wordcloud</string>
+    <string name="stopword_title">Custom stopwords</string>
+    <string name="stopword_hint">Enter your stopword here</string>
+    <string name="menu_upgrd_pro_label">Upgrade to Pro</string>
+    <string name="menu_info_bug_label">Info and Bug Reports</string>
+    <string name="menu_share_app_label">Share App</string>
+    <string name="menu_rate_app_label">Rate the App</string>
+    <string name="wp_install_error_label">WhatsApp is not installed on this phone</string>
+    <string name="share_app_title">
+        Let me recommend you this application
+
+    </string>
+    <string name="warn_upgrade_pro">You need to upgrade to pro</string>
+    <string name="numofword_dialog_title">Number of words in wordcloud</string>
+    <string name="dialog_ok_label">OK</string>
+    <string name="dialog_cancel_label">Cancel</string>
+    <string name="dialog_yes_label">Yes</string>
+    <string name="dialog_no_label">No</string>
+    <string name="dialog_exit_title">Are you sure you want to exit?</string>
+    <string name="msg_count_label">Total Message Count: %1$s</string>
+    <string name="msg_freq_label">Message Sending Frequency: %1$s Msg/Day</string>
+    <string name="main_dialog_title">Analyzing</string>
+    <string name="main_dialog_desc">Please wait…</string>
 </resources>

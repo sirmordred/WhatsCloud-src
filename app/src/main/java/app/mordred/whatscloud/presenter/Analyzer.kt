@@ -13,6 +13,7 @@ import android.provider.OpenableColumns
 import android.view.View
 import app.mordred.whatscloud.Chat
 import app.mordred.whatscloud.Message
+import app.mordred.whatscloud.R
 import app.mordred.whatscloud.adapter.UserListAdapter
 import app.mordred.whatscloud.billing.BillingManager
 import app.mordred.whatscloud.model.UserListItem
@@ -58,8 +59,8 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     )
 
     override fun onPreExecute() {
-        pd.setTitle("Processor")
-        pd.setMessage("Processing... Please wait...")
+        pd.setTitle(activity.getString(R.string.main_dialog_title))
+        pd.setMessage(activity.getString(R.string.main_dialog_desc))
         pd.setCancelable(false)
         pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
         pd.max = 100
@@ -282,8 +283,10 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             activity.pieChart?.data = pieData
             activity.pieChart?.visibility = View.VISIBLE
 
-            activity.chatMsgCountTv?.text = "Total Message Count: " + chatMsgCount.toString()
-            activity.chatMsgFreqTv?.text = "Message Sending Frequency: " + chatMsgFreq.toString() + " Msg/Day"
+            activity.chatMsgCountTv?.text = String.format(activity.getString(R.string.msg_count_label),
+                chatMsgCount.toString())
+            activity.chatMsgFreqTv?.text = String.format(activity.getString(R.string.msg_freq_label),
+                chatMsgFreq.toString())
             activity.chatWdImgView?.setImageBitmap(chat?.chatCommonWordCloud)
             val usrListAdapter = UserListAdapter(resultUserList, activity)
             activity.chatUsrListRecyclerView?.adapter = usrListAdapter

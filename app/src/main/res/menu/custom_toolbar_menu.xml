@@ -10,7 +10,7 @@
 
     <item
             android:id="@+id/menu_upgrd_pro"
-            android:title="Upgrade to Pro"
+            android:title="@string/menu_upgrd_pro_label"
             app:showAsAction="collapseActionView" />
 
     <item
@@ -20,17 +20,17 @@
 
     <item
             android:id="@+id/menu_info_bug"
-            android:title="Info and Bug Reports"
+            android:title="@string/menu_info_bug_label"
             app:showAsAction="collapseActionView" />
 
     <item
             android:id="@+id/menu_share_app"
-            android:title="Share App"
+            android:title="@string/menu_share_app_label"
             app:showAsAction="collapseActionView" />
 
     <item
             android:id="@+id/menu_rate_app"
-            android:title="Rate the App"
+            android:title="@string/menu_rate_app_label"
             app:showAsAction="collapseActionView" />
 
     <item

@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             } else {
                 Toast.makeText(applicationContext,
-                    "WhatsApp is not installed on this phone", Toast.LENGTH_LONG).show()
+                    getString(R.string.wp_install_error_label), Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
             val shareIntent = Intent(Intent.ACTION_SEND)
             shareIntent.type = "text/plain"
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, "WhatsCloud")
-            var shareMessage = "\nLet me recommend you this application\n\n"
+            var shareMessage = getString(R.string.share_app_title)
             shareMessage =
                 shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n"
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)

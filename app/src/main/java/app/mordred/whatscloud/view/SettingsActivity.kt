@@ -65,7 +65,7 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
             if (isAppPro) {
                 showWordCountInputDialog()
             } else {
-                Toast.makeText(applicationContext, "You need to upgrade to pro",
+                Toast.makeText(applicationContext, getString(R.string.warn_upgrade_pro),
                     Toast.LENGTH_LONG).show()
             }
         }
@@ -86,7 +86,7 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
                 }
                 stopWordEdx?.text?.clear()
             } else {
-                Toast.makeText(applicationContext, "You need to upgrade to pro",
+                Toast.makeText(applicationContext, getString(R.string.warn_upgrade_pro),
                     Toast.LENGTH_LONG).show()
             }
         }
@@ -96,12 +96,12 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     private fun showWordCountInputDialog() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
-        builder.setTitle("Number of words in wordcloud")
+        builder.setTitle(getString(R.string.numofword_dialog_title))
         val dialogLayout = inflater.inflate(R.layout.input_dialog, null)
         val editText  = dialogLayout.findViewById<EditText>(R.id.edxInputDialog)
         editText?.setText(defWordCountInWd.toString())
         builder.setView(dialogLayout)
-        builder.setPositiveButton("OK") { dialogInterface, _ ->
+        builder.setPositiveButton(getString(R.string.dialog_ok_label)) { dialogInterface, _ ->
             val userEnteredNum = editText.text.toString().toInt()
             if (userEnteredNum in 1..499 && userEnteredNum != defWordCountInWd) {
                 defWordCountInWd = userEnteredNum
@@ -110,7 +110,7 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
             }
             dialogInterface.dismiss()
         }
-        builder.setNegativeButton("Cancel") { dialogInterface, _ ->
+        builder.setNegativeButton(getString(R.string.dialog_cancel_label)) { dialogInterface, _ ->
             dialogInterface.dismiss()
         }
         builder.show()

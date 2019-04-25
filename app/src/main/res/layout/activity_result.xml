@@ -85,7 +85,6 @@
                             android:id="@+id/tv_chat_msgcount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/chart"
                             android:background="@android:color/white"
                             android:padding="8dp"
                             android:layout_marginBottom="12dp"
@@ -97,7 +96,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/white"
-                            android:layout_below="@id/tv_chat_msgcount"
                             android:padding="8dp"
                             android:layout_marginBottom="12dp"
                             android:textSize="16sp"/>
@@ -107,20 +105,17 @@
                             android:adjustViewBounds="true"
                             android:background="@android:color/white"
                             android:padding="4dp"
-                            android:layout_below="@id/tv_chat_msgfreq"
                             android:layout_marginBottom="12dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
 
                     <com.github.mikephil.charting.charts.HorizontalBarChart
-                            android:layout_below="@id/chatWdImg"
                             android:id="@+id/horizontalBarChart"
                             android:layout_marginBottom="12dp"
                             android:layout_width="match_parent"
                             android:layout_height="300dp"/>
 
                     <com.github.mikephil.charting.charts.PieChart
-                            android:layout_below="@id/horizontalBarChart"
                             android:id="@+id/piechart"
                             android:padding="8dp"
                             android:layout_width="match_parent"
