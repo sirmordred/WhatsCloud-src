@@ -2,58 +2,30 @@ package app.mordred.whatscloud.ad
 
 import android.support.v7.app.AppCompatActivity
 import app.mordred.whatscloud.BuildConfig
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.reward.RewardItem
-import com.google.android.gms.ads.reward.RewardedVideoAd
-import com.google.android.gms.ads.reward.RewardedVideoAdListener
 
-class AdManager(val baseActivity: AppCompatActivity): RewardedVideoAdListener {
+class AdManager(baseActivity: AppCompatActivity) {
 
-    var mRewardedVideoAd: RewardedVideoAd
+    private var mInterstitialAd: InterstitialAd
 
     init {
         MobileAds.initialize(baseActivity, BuildConfig.AdmobAppId)
-        mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(baseActivity)
-        mRewardedVideoAd.rewardedVideoAdListener = this
-    }
-
-    override fun onRewardedVideoAdClosed() {
-        // empty
-    }
-
-    override fun onRewardedVideoAdLeftApplication() {
-        // empty
-    }
-
-    override fun onRewardedVideoAdLoaded() {
-        if (mRewardedVideoAd.isLoaded) {
-            mRewardedVideoAd.show()
+        mInterstitialAd = InterstitialAd(baseActivity)
+        mInterstitialAd.adUnitId = BuildConfig.AdmobUnitId
+        mInterstitialAd.adListener = object: AdListener() {
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                if (mInterstitialAd.isLoaded) {
+                    mInterstitialAd.show()
+                }
+            }
         }
     }
 
-    override fun onRewardedVideoAdOpened() {
-        // empty
-    }
-
-    override fun onRewardedVideoCompleted() {
-        // empty
-    }
-
-    override fun onRewarded(p0: RewardItem?) {
-        // empty
-    }
-
-    override fun onRewardedVideoStarted() {
-        // empty
-    }
-
-    override fun onRewardedVideoAdFailedToLoad(p0: Int) {
-        // empty
-    }
-
-    fun showRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(BuildConfig.AdmobUnitId,
-            AdRequest.Builder().build())
+    fun showInterstitialAd() {
+        mInterstitialAd.loadAd(AdRequest.Builder().build())
     }
 }

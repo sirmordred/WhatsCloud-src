@@ -309,7 +309,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
         }
         pd.dismiss()
         if (!BillingManager.isPremiumApp) { // TODO there may be race conditions here, fix it in the future
-            activity.adMng?.showRewardedVideoAd()
+            activity.adMng?.showInterstitialAd()
         }
         super.onPostExecute(result)
     }
