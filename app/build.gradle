@@ -21,6 +21,7 @@ android {
             buildConfigField 'String', "LicenceId", WhatsCloud_LicenceId
             buildConfigField 'String', "MerchantId", WhatsCloud_MerchantId
             buildConfigField 'String', "AdmobAppId", WhatsCloud_AdmobAppId
+            resValue 'string', "AdmobAppId", WhatsCloud_AdmobAppId
             buildConfigField 'String', "AdmobUnitId", WhatsCloud_AdmobUnitId
         }
         release {
@@ -30,6 +31,7 @@ android {
             buildConfigField 'String', "LicenceId", WhatsCloud_LicenceId
             buildConfigField 'String', "MerchantId", WhatsCloud_MerchantId
             buildConfigField 'String', "AdmobAppId", WhatsCloud_AdmobAppId
+            resValue 'string', "AdmobAppId", WhatsCloud_AdmobAppId
             buildConfigField 'String', "AdmobUnitId", WhatsCloud_AdmobUnitId
         }
     }
