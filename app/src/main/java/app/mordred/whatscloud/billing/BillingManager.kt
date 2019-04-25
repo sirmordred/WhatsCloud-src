@@ -29,7 +29,7 @@ class BillingManager (val baseActivity: AppCompatActivity): BillingProcessor.IBi
             if (!bp?.isPurchased(PRODUCT_ID)!!) {
                 bp?.purchase(baseActivity,PRODUCT_ID)
             } else {
-                Toast.makeText(baseActivity, "You are already Pro user",
+                Toast.makeText(baseActivity, "You are already pro user",
                     Toast.LENGTH_LONG).show()
             }
         } else {
@@ -43,7 +43,7 @@ class BillingManager (val baseActivity: AppCompatActivity): BillingProcessor.IBi
             if (bp?.isPurchased(PRODUCT_ID)!!) {
                 bp?.consumePurchase(PRODUCT_ID)
             } else {
-                Toast.makeText(baseActivity, "You are not Pro user yet",
+                Toast.makeText(baseActivity, "You are not pro user yet",
                     Toast.LENGTH_LONG).show()
             }
         } else {

@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button" >
 
-            <Button
+            <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -52,8 +52,8 @@
                     android:drawablePadding="8dp"
                     android:drawableLeft="@mipmap/verified_user_black"
                     android:gravity="center"
-                    android:text="UPGRADE NOW"
-                    android:textSize="18sp"
+                    android:text="Upgrade now"
+                    android:textSize="16sp"
                     android:textColor="@android:color/white" />
         </FrameLayout>
 
@@ -61,7 +61,6 @@
 
     <LinearLayout
             android:id="@+id/custSettingLayout"
-            android:enabled="false"
             android:layout_below="@+id/expInAppBillingLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

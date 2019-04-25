@@ -10,19 +10,31 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.widget.*
+import app.mordred.whatscloud.BuildConfig
 import app.mordred.whatscloud.R
 import app.mordred.whatscloud.adapter.StopWordListAdapter
-import app.mordred.whatscloud.billing.BillingManager
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.TransactionDetails
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout
 import kotlinx.android.synthetic.main.activity_settings.*
 
-class SettingsActivity : AppCompatActivity() {
-
+class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     var sharedPref: SharedPreferences? = null
     var stopWordEdx: EditText? = null
     var stpWrdListAdapter: StopWordListAdapter? = null
     var defWordCountInWd = 30
     var tvWordCount: TextView? = null
+
+    var proExpView: ExpandableRelativeLayout? = null
+    var wordNumLl: LinearLayout? = null
+    var addStopWordButton: Button? = null
+
+    var isBillingLibReady = false
+    var isAppPro = false
+    var bp: BillingProcessor? = null
+    val PRODUCT_ID = BuildConfig.ProductId
+    val LICENSE_KEY = BuildConfig.LicenceId
+    val MERCHANT_ID = BuildConfig.MerchantId
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,18 +42,15 @@ class SettingsActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val bm = BillingManager(this)
-
-        val customSettingLayout = findViewById<LinearLayout>(R.id.custSettingLayout)
-        val exUpgrdProLayout = findViewById<ExpandableRelativeLayout>(R.id.expInAppBillingLayout)
-        if(BillingManager.isPremiumApp) {
-            exUpgrdProLayout.collapse()
-            customSettingLayout.isEnabled = true
+        if(BillingProcessor.isIabServiceAvailable(this)) {
+            bp = BillingProcessor(this, LICENSE_KEY, MERCHANT_ID, this)
         }
+
+        proExpView = findViewById(R.id.expInAppBillingLayout)
 
         val upgrToProBtn = findViewById<FrameLayout>(R.id.upgrProBtnLayout)
         upgrToProBtn.setOnClickListener {
-            bm.upgradeToPro()
+            upgradeToProSettings()
         }
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
@@ -51,9 +60,14 @@ class SettingsActivity : AppCompatActivity() {
         tvWordCount = findViewById(R.id.tvWordNumVal)
         tvWordCount?.text = defWordCountInWd.toString()
 
-        val wordNumLl = findViewById<LinearLayout>(R.id.llWordNum)
-        wordNumLl.setOnClickListener {
-            showWordCountInputDialog()
+        wordNumLl = findViewById(R.id.llWordNum)
+        wordNumLl?.setOnClickListener {
+            if (isAppPro) {
+                showWordCountInputDialog()
+            } else {
+                Toast.makeText(applicationContext, "You need to upgrade to pro",
+                    Toast.LENGTH_LONG).show()
+            }
         }
 
         rv_stopword_list.layoutManager = LinearLayoutManager(this)
@@ -63,13 +77,18 @@ class SettingsActivity : AppCompatActivity() {
 
         stopWordEdx = findViewById(R.id.edxStopWord)
 
-        val addStopWordButton = findViewById<Button>(R.id.addStopWordBtn)
-        addStopWordButton.setOnClickListener {
-            val userEnteredStopWord = stopWordEdx?.text?.toString()?.trimStart()?.trimEnd()
-            if (userEnteredStopWord != null && userEnteredStopWord.isNotEmpty() && userEnteredStopWord.isNotBlank()) {
-                stpWrdListAdapter?.addElementToList(userEnteredStopWord)
+        addStopWordButton = findViewById<Button>(R.id.addStopWordBtn)
+        addStopWordButton?.setOnClickListener {
+            if (isAppPro) {
+                val userEnteredStopWord = stopWordEdx?.text?.toString()?.trimStart()?.trimEnd()
+                if (userEnteredStopWord != null && userEnteredStopWord.isNotEmpty() && userEnteredStopWord.isNotBlank()) {
+                    stpWrdListAdapter?.addElementToList(userEnteredStopWord)
+                }
+                stopWordEdx?.text?.clear()
+            } else {
+                Toast.makeText(applicationContext, "You need to upgrade to pro",
+                    Toast.LENGTH_LONG).show()
             }
-            stopWordEdx?.text?.clear()
         }
     }
 
@@ -107,5 +126,54 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateProSettingsStatus() {
+        if (bp?.isPurchased(PRODUCT_ID)!!) {
+            isAppPro = true
+            proExpView?.collapse()
+        }
+    }
+
+    override fun onBillingInitialized() {
+        isBillingLibReady = true
+        updateProSettingsStatus()
+    }
+
+    override fun onPurchaseHistoryRestored() {
+        updateProSettingsStatus()
+    }
+
+    override fun onProductPurchased(productId: String, details: TransactionDetails?) {
+        updateProSettingsStatus()
+    }
+
+    override fun onBillingError(errorCode: Int, error: Throwable?) {
+        Toast.makeText(applicationContext, "Error: Check your Google Play settings",
+            Toast.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateProSettingsStatus()
+    }
+
+    override fun onDestroy() {
+        bp?.release()
+        super.onDestroy()
+    }
+
+    private fun upgradeToProSettings() {
+        if (isBillingLibReady) {
+            if (!bp?.isPurchased(PRODUCT_ID)!!) {
+                bp?.purchase(this,PRODUCT_ID)
+            } else {
+                Toast.makeText(applicationContext, "You are already pro user",
+                    Toast.LENGTH_LONG).show()
+            }
+        } else {
+            Toast.makeText(applicationContext, "Billing lib is not ready yet",
+                Toast.LENGTH_LONG).show()
+        }
     }
 }
