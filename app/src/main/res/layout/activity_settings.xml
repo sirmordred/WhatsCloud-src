@@ -116,6 +116,7 @@
                 android:orientation="horizontal"
                 android:layout_marginBottom="12dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
                 android:weightSum="1"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -140,7 +141,7 @@
                     android:textSize="48sp"
                     android:textStyle="bold"
                     android:textColor="@android:color/black"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/rounded_button_greenbkg"
                     android:layout_weight="0.2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>

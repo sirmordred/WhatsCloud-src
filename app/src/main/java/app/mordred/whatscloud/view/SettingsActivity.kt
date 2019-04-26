@@ -1,6 +1,7 @@
 package app.mordred.whatscloud.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -151,6 +152,11 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     override fun onBillingError(errorCode: Int, error: Throwable?) {
         Toast.makeText(applicationContext, "Error: Check your Google Play settings",
             Toast.LENGTH_LONG).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (!bp?.handleActivityResult(requestCode, resultCode, data)!!)
+            super.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onResume() {
