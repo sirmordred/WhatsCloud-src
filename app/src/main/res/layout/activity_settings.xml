@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-        <FrameLayout
+        <LinearLayout
                 android:id="@+id/upgrProBtnLayout"
                 android:layout_below="@id/proTv"
                 android:layout_marginStart="16dp"
@@ -41,21 +41,28 @@
                 android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
                 android:background="@drawable/rounded_button" >
+
+            <ImageView
+                    android:id="@+id/proIconImgView"
+                    android:padding="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:src="@mipmap/verified_user_black"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:background="@android:color/holo_green_dark"
-                    android:padding="8dp"
-                    android:drawablePadding="8dp"
-                    android:drawableLeft="@mipmap/verified_user_black"
                     android:gravity="center"
                     android:text="@string/pro_upgrade_label"
                     android:textSize="16sp"
                     android:textColor="@android:color/white" />
-        </FrameLayout>
+        </LinearLayout>
 
     </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
 

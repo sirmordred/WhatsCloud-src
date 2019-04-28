@@ -1,49 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WhatsCloud</string>
-    <string name="tuto_step1">STEP 1: Open &quot;WhatsApp&quot;</string>
-    <string name="tuto_step2">STEP 2: Select any chat you want to analyze</string>
-    <string name="tuto_step3">STEP 3: Tap to 3-dot menu icon in top-right corner of your desired chat</string>
-    <string name="tuto_step4">STEP 4: Select “More” in the dropdown menu of options</string>
-    <string name="tuto_step5">STEP 5: Tap to &quot;Export Chat&quot; to generate the export</string>
-    <string name="tuto_step6">STEP 6: Select &quot;Without Media&quot;</string>
-    <string name="tuto_step7">STEP 7: Send the chat to &quot;WhatsCloud&quot;</string>
-    <string name="goto_wp">Ok got it. Let\'s go to WhatsApp</string>
-    <string name="app_info_title">App Info</string>
-    <string name="app_info_desc">WhatsCloud is a WhatsApp group analyzer and visualyzer tool that will tell you things
-        like: \n\u2022 Who is the most chitty chatty person in your group\n\u2022 What are the most common words\n\u2022
-        Which days are the most active during the chat period\n\u2022 And more…</string>
-    <string name="bug_report_title">Bug Reports and Feature Requests</string>
-    <string name="bug_report_desc">Grab the logs by using adb logcat, then attach that log file into your report with
-        the following informations: Device Model, Android Version, Rom type(Stock or Custom) and send it directly to
-        the WhatsCloud\'s project page which hosted on git</string>
-    <string name="pro_upgrade_desc">Upgrade to premium and get the following
-        features: \n\u2022 No Ads\n\u2022 Custom setting number of words in wordclouds\n\u2022 Custom
-        stop word/filtering word adding support</string>
-    <string name="pro_upgrade_label">Upgrade now</string>
-    <string name="numof_word_label">Number of words in wordcloud</string>
-    <string name="stopword_title">Custom stopwords</string>
-    <string name="stopword_hint">Enter your stopword here</string>
-    <string name="menu_upgrd_pro_label">Upgrade to Pro</string>
-    <string name="menu_info_bug_label">Info and Bug Reports</string>
-    <string name="menu_share_app_label">Share App</string>
-    <string name="menu_rate_app_label">Rate the App</string>
-    <string name="wp_install_error_label">WhatsApp is not installed on this phone</string>
-    <string name="share_app_title">
-        Let me recommend you this application
-
+    <string name="tuto_step1">1. Adım: WhatsApp\'ı açın</string>
+    <string name="tuto_step2">2. Adım: Analiz etmek istediğiniz sohbeti açın</string>
+    <string name="tuto_step3">3. Adım: Sağ-üstten seçeneklere tıklayın</string>
+    <string name="tuto_step4">4. Adım: Açılan menüden “Diğer” seçenekleri tıklayın</string>
+    <string name="tuto_step5">5. Adım: “Sohbeti dışa aktar“ seçeneğine tıklayın</string>
+    <string name="tuto_step6">6. Adım: “Medyasız“ seçeneğini seçin</string>
+    <string name="tuto_step7">7. Adım: Açılan ekrandan WhatsCloud\'u seçin</string>
+    <string name="goto_wp">WhatsApp\'ı aç</string>
+    <string name="app_info_title">Uygulama bilgisi</string>
+    <string name="app_info_desc">WhatsCloud aşağıdaki istatistiksel verileri görmenizi sağlayan WhatsApp sohbet analiz aracıdır: \n\u2022 Grubunuzda en çok mesaj atan kişiler\n\u2022 En çok kullanılan kelimeler\n\u2022
+        En çok mesaj atılan günler\n\u2022 Ve daha fazlası…
     </string>
-    <string name="warn_upgrade_pro">You need to upgrade to pro</string>
-    <string name="numofword_dialog_title">Number of words in wordcloud</string>
-    <string name="dialog_ok_label">OK</string>
-    <string name="dialog_cancel_label">Cancel</string>
-    <string name="dialog_yes_label">Yes</string>
-    <string name="dialog_no_label">No</string>
-    <string name="dialog_exit_title">Are you sure you want to exit?</string>
-    <string name="msg_count_label">Total Message Count: %1$s</string>
-    <string name="msg_freq_label">Message Sending Frequency: %1$s Msg/Day</string>
-    <string name="main_dialog_title">Analyzing</string>
-    <string name="main_dialog_desc">Please wait…</string>
+    <string name="bug_report_title">Hata Raporları ve İstekler</string>
+    <string name="bug_report_desc">Adb logcat aracılığıyla logları kaydedin, daha sonra log dosyasını takip eden
+        bilgilerle birlikte hata raporunuza ekleyin: Cihaz Modeli, Android Sürümü, Yüklü rom tipi(stok veya modifiye)
+        Oluşturduğunuz hata raporunu aşağıdaki linkten WhatsCloud\'un proje sayfasinda "yeni hata-new issue" olarak açın
+    </string>
+    <string name="pro_upgrade_desc">Pro versiyona güncelleyerek aşağıdaki özelliklere sahip olabilirsiniz: \n\u2022
+        Reklamsız\n\u2022 Wordcloud kelime sayısını ayarlama desteği\n\u2022 Filtre kelime ekleme desteği
+    </string>
+    <string name="pro_upgrade_label">Şimdi güncelle</string>
+    <string name="numof_word_label">Wordcloud\'daki kelime sayısı</string>
+    <string name="stopword_title">Filtrelenecek kelimeler</string>
+    <string name="stopword_hint">Filtrelenecek kelimenizi buraya girin</string>
+    <string name="menu_upgrd_pro_label">Pro versiyona güncelle</string>
+    <string name="menu_info_bug_label">Bilgi ve Hata Bildirimleri</string>
+    <string name="menu_share_app_label">Uygulamayı paylaş</string>
+    <string name="menu_rate_app_label">Uygulamaya yıldız ver</string>
+    <string name="wp_install_error_label">WhatsApp bu telefonda yüklü değil</string>
+    <string name="share_app_title">Uygulamayı dene</string>
+    <string name="warn_upgrade_pro">Bu özelliği kullanabilmek için Pro versiyon gereklidir</string>
+    <string name="numofword_dialog_title">Wordcloud\'daki kelime sayısı</string>
+    <string name="dialog_ok_label">Tamam</string>
+    <string name="dialog_cancel_label">Iptal</string>
+    <string name="dialog_yes_label">Evet</string>
+    <string name="dialog_no_label">Hayır</string>
+    <string name="dialog_exit_title">Çıkmak istediğinizden emin misiniz?</string>
+    <string name="msg_count_label">Toplam mesaj sayısı: %1$s</string>
+    <string name="msg_freq_label">Mesaj gönderme sıklığı: %1$s Msg/Gün</string>
+    <string name="main_dialog_title">Analiz ediliyor</string>
+    <string name="main_dialog_desc">Lütfen bekleyin…</string>
     <string name="most_used_words_label">En çok kullanılan kelimeler:</string>
     <string name="most_active_dates_label">En aktif tarihler:</string>
     <string name="most_active_days_label">Haftanın en aktif günleri:</string>

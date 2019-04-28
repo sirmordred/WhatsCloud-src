@@ -3,8 +3,10 @@ package app.mordred.whatscloud.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
@@ -47,9 +49,11 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
             bp = BillingProcessor(this, LICENSE_KEY, MERCHANT_ID, this)
         }
 
+        val proIconImageView = findViewById<ImageView>(R.id.proIconImgView)
+        proIconImageView.setColorFilter(ContextCompat.getColor(applicationContext, R.color.colorMaterialBlue),
+            PorterDuff.Mode.SRC_IN)
         proExpView = findViewById(R.id.expInAppBillingLayout)
-
-        val upgrToProBtn = findViewById<FrameLayout>(R.id.upgrProBtnLayout)
+        val upgrToProBtn = findViewById<LinearLayout>(R.id.upgrProBtnLayout)
         upgrToProBtn.setOnClickListener {
             upgradeToProSettings()
         }

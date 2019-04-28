@@ -33,7 +33,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="4dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
                     android:gravity="center"
                     android:layout_height="wrap_content"
@@ -232,6 +232,7 @@
     </ScrollView>
 
     <Button
+            android:textAllCaps="false"
             android:gravity="center"
             android:background="@android:color/holo_green_dark"
             android:text="@string/goto_wp"

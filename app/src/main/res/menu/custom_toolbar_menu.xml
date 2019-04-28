@@ -14,11 +14,6 @@
             app:showAsAction="collapseActionView" />
 
     <item
-            android:id="@+id/menu_undo_upgrd_pro"
-            android:title="Undo Upgrade to Pro"
-            app:showAsAction="collapseActionView" />
-
-    <item
             android:id="@+id/menu_info_bug"
             android:title="@string/menu_info_bug_label"
             app:showAsAction="collapseActionView" />
@@ -33,9 +28,15 @@
             android:title="@string/menu_rate_app_label"
             app:showAsAction="collapseActionView" />
 
+    <!--
+    <item
+            android:id="@+id/menu_undo_upgrd_pro"
+            android:title="Undo Upgrade to Pro"
+            app:showAsAction="collapseActionView" />
+
     <item
             android:id="@+id/menu_test_chat"
             android:title="TestAnalyzer"
-            app:showAsAction="collapseActionView" />
+            app:showAsAction="collapseActionView" /> DEBUG -->
 
 </menu>

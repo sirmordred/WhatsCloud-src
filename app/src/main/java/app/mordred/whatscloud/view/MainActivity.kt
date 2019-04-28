@@ -62,14 +62,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.menu_upgrd_pro -> bm?.upgradeToPro()
-            R.id.menu_undo_upgrd_pro -> bm?.undoUpgradeToPro() // TODO will be removed in production
+            //R.id.menu_undo_upgrd_pro -> bm?.undoUpgradeToPro() // DEBUG
             R.id.menu_info_bug -> {
                 val intent = Intent(this, InfoActivity::class.java)
                 startActivity(intent)
             }
             R.id.menu_share_app -> shareApp()
             R.id.menu_rate_app -> rateApp()
-            R.id.menu_test_chat -> testAnalyzer() // TODO will be removed in production
+            //R.id.menu_test_chat -> testAnalyzer() // DEBUG
         }
         return super.onOptionsItemSelected(item)
     }
