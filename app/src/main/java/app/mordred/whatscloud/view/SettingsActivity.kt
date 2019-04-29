@@ -154,8 +154,7 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        Toast.makeText(applicationContext, "Error: Check your Google Play settings",
-            Toast.LENGTH_LONG).show()
+        // empty
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
