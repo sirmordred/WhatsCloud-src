@@ -74,8 +74,7 @@ class BillingManager (val baseActivity: AppCompatActivity): BillingProcessor.IBi
     }
 
     override fun onBillingError(errorCode: Int, error: Throwable?) {
-        Toast.makeText(baseActivity, "Error: Check your Google Play settings",
-            Toast.LENGTH_LONG).show()
+        // empty
     }
 
 }
