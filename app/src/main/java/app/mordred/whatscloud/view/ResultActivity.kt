@@ -57,6 +57,8 @@ class ResultActivity : AppCompatActivity() {
 
     var isTest = false
 
+    var analyzer: Analyzer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
@@ -177,7 +179,8 @@ class ResultActivity : AppCompatActivity() {
             if (intent != null && intent?.extras != null
                 && intent.action != null && intent.action == Intent.ACTION_SEND_MULTIPLE) {
                 val inputUri: Uri = (intent.extras?.get(Intent.EXTRA_STREAM) as ArrayList<*>)[0] as Uri
-                Analyzer(this).execute(inputUri)
+                analyzer = Analyzer(this)
+                analyzer?.execute(inputUri)
             } else {
                 // application opened normally
                 val intent = Intent(this, MainActivity::class.java)
@@ -247,6 +250,7 @@ class ResultActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         billMng?.destroy()
+        analyzer?.dismissProgressDialog()
         super.onDestroy()
     }
 }

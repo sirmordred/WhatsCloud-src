@@ -307,11 +307,17 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             })
             activity.chatTitleHeader?.visibility = View.VISIBLE
         }
-        pd.dismiss()
+        dismissProgressDialog()
         if (!BillingManager.isPremiumApp) { // TODO there may be race conditions here, fix it in the future
             activity.adMng?.showInterstitialAd()
         }
         super.onPostExecute(result)
+    }
+
+    public fun dismissProgressDialog() {
+        if (pd.isShowing) {
+            pd.dismiss()
+        }
     }
 
     private fun placeWpBackground(activity: ResultActivity ,baseImgFileName: String, textBmp: Bitmap): Bitmap {
