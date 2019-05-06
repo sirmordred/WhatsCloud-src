@@ -314,7 +314,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
         super.onPostExecute(result)
     }
 
-    public fun dismissProgressDialog() {
+    fun dismissProgressDialog() {
         if (pd.isShowing) {
             pd.dismiss()
         }
@@ -360,13 +360,17 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     }
 
     private fun getNameFromUri(cntresolver: ContentResolver, uri: Uri): String {
-        val cursor = cntresolver.query(uri, null, null, null, null)
-        if (cursor != null) {
-            val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            cursor.moveToFirst()
-            val name = cursor.getString(index)
-            cursor.close()
-            return name.removeSuffix(".txt")
+        try {
+            val cursor = cntresolver.query(uri, null, null, null, null)
+            if (cursor != null) {
+                val index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                cursor.moveToFirst()
+                val name = cursor.getString(index)
+                cursor.close()
+                return name.removeSuffix(".txt")
+            }
+        } catch (e: Exception) {
+            // empty handler, just don't crash whole app
         }
         return "WhatsApp Chat"
     }
