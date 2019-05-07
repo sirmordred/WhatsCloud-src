@@ -19,7 +19,7 @@
     <string name="pro_upgrade_desc">Upgrade to premium and get the following
         features: \n\u2022 No Ads\n\u2022 Custom setting number of words in wordclouds\n\u2022 Custom
         stop word/filtering word adding support</string>
-    <string name="pro_upgrade_label">Upgrade now</string>
+    <string name="pro_upgrade_label">Upgrade now %1$s</string>
     <string name="numof_word_label">Number of words in wordcloud</string>
     <string name="stopword_title">Custom stopwords</string>
     <string name="stopword_hint">Enter your stopword here</string>

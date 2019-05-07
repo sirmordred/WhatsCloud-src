@@ -39,11 +39,15 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     val LICENSE_KEY = BuildConfig.LicenceId
     val MERCHANT_ID = BuildConfig.MerchantId
 
+    var tvUpgrdNow: TextView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        tvUpgrdNow = findViewById(R.id.upgrdNowTv)
 
         if(BillingProcessor.isIabServiceAvailable(this)) {
             bp = BillingProcessor(this, LICENSE_KEY, MERCHANT_ID, this)
@@ -142,6 +146,11 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
     override fun onBillingInitialized() {
         isBillingLibReady = true
+        var prodPrice = bp?.getPurchaseListingDetails(PRODUCT_ID)?.priceText
+        if (prodPrice == null) {
+            prodPrice = ""
+        }
+        tvUpgrdNow?.text = String.format(getString(R.string.pro_upgrade_label), prodPrice)
         updateProSettingsStatus()
     }
 

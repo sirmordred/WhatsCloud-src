@@ -21,7 +21,7 @@
     <string name="pro_upgrade_desc">Pro versiyona güncelleyerek aşağıdaki özelliklere sahip olabilirsiniz: \n\u2022
         Reklamsız\n\u2022 Wordcloud kelime sayısını ayarlama desteği\n\u2022 Filtre kelime ekleme desteği
     </string>
-    <string name="pro_upgrade_label">Şimdi güncelle</string>
+    <string name="pro_upgrade_label">Şimdi güncelle %1$s</string>
     <string name="numof_word_label">Wordcloud\'daki kelime sayısı</string>
     <string name="stopword_title">Filtrelenecek kelimeler</string>
     <string name="stopword_hint">Filtrelenecek kelimenizi buraya girin</string>
