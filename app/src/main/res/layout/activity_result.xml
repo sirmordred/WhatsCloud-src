@@ -91,6 +91,16 @@
                             android:textSize="16sp"/>
 
                     <TextView
+                            android:text="Total Word Count: 12345"
+                            android:id="@+id/tv_chat_msgwordcount"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/white"
+                            android:padding="8dp"
+                            android:layout_marginBottom="12dp"
+                            android:textSize="16sp"/>
+
+                    <TextView
                             android:text="Message Sending Frequency: 12 Msg/Day"
                             android:id="@+id/tv_chat_msgfreq"
                             android:layout_width="match_parent"

@@ -20,6 +20,7 @@
         features: \n\u2022 No Ads\n\u2022 Custom setting number of words in wordclouds\n\u2022 Custom
         stop word/filtering word adding support</string>
     <string name="pro_upgrade_label">Upgrade now %1$s</string>
+    <string name="dateformat_label">Date format</string>
     <string name="numof_word_label">Number of words in wordcloud</string>
     <string name="stopword_title">Custom stopwords</string>
     <string name="stopword_hint">Enter your stopword here</string>
@@ -40,6 +41,7 @@
     <string name="dialog_no_label">No</string>
     <string name="dialog_exit_title">Are you sure you want to exit?</string>
     <string name="msg_count_label">Total Message Count: %1$s</string>
+    <string name="msgword_count_label">Total Word Count: %1$s</string>
     <string name="msg_freq_label">Message Sending Frequency: %1$s Msg/Day</string>
     <string name="main_dialog_title">Analyzing</string>
     <string name="main_dialog_desc">Please wait…</string>

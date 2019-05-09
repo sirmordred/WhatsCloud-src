@@ -19,16 +19,19 @@ import app.mordred.whatscloud.adapter.StopWordListAdapter
 import com.anjlab.android.iab.v3.BillingProcessor
 import com.anjlab.android.iab.v3.TransactionDetails
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout
+import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
     var sharedPref: SharedPreferences? = null
+    var stopWordTitle: TextView? = null
     var stopWordEdx: EditText? = null
     var stpWrdListAdapter: StopWordListAdapter? = null
     var defWordCountInWd = 30
     var tvWordCount: TextView? = null
 
     var proExpView: ExpandableRelativeLayout? = null
+    var tvWordNumTitle: TextView? = null
     var wordNumLl: LinearLayout? = null
     var addStopWordButton: Button? = null
 
@@ -41,6 +44,14 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
     var tvUpgrdNow: TextView? = null
 
+    val mostUsedDateForms = mutableListOf("yyyy.M.d", "MM-dd-yyyy", "d-M-yyyy",
+        "d.M.yyyy", "d.MM.yyyy", "dd-MM-yyyy",
+        "d/MM/yyyy", "yyyy.MM.dd", "d/M/yyyy",
+        "dd.MM.yyyy", "yyyy/MM/dd", "MM/dd/yyyy",
+        "yyyy/M/d", "yyyy.M.d", "yyyy-M-d",
+        "yyyy.d.M", "d.M.yyyy", "dd/MM/yyyy",
+        "yyyy-MM-dd", "M/d/yyyy")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -48,6 +59,10 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         tvUpgrdNow = findViewById(R.id.upgrdNowTv)
+        tvWordNumTitle = findViewById(R.id.tvWordNumLabel)
+        stopWordTitle = findViewById(R.id.stopWordLabel)
+        addStopWordButton = findViewById(R.id.addStopWordBtn)
+        proExpView = findViewById(R.id.expInAppBillingLayout)
 
         if(BillingProcessor.isIabServiceAvailable(this)) {
             bp = BillingProcessor(this, LICENSE_KEY, MERCHANT_ID, this)
@@ -56,7 +71,6 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         val proIconImageView = findViewById<ImageView>(R.id.proIconImgView)
         proIconImageView.setColorFilter(ContextCompat.getColor(applicationContext, R.color.colorMaterialBlue),
             PorterDuff.Mode.SRC_IN)
-        proExpView = findViewById(R.id.expInAppBillingLayout)
         val upgrToProBtn = findViewById<LinearLayout>(R.id.upgrProBtnLayout)
         upgrToProBtn.setOnClickListener {
             upgradeToProSettings()
@@ -65,7 +79,6 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
         defWordCountInWd = sharedPref?.getInt("defWordCntInWd", 30)!!
-
         tvWordCount = findViewById(R.id.tvWordNumVal)
         tvWordCount?.text = defWordCountInWd.toString()
 
@@ -86,7 +99,6 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
 
         stopWordEdx = findViewById(R.id.edxStopWord)
 
-        addStopWordButton = findViewById<Button>(R.id.addStopWordBtn)
         addStopWordButton?.setOnClickListener {
             if (isAppPro) {
                 val userEnteredStopWord = stopWordEdx?.text?.toString()?.trimStart()?.trimEnd()
@@ -98,6 +110,22 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
                 Toast.makeText(applicationContext, getString(R.string.warn_upgrade_pro),
                     Toast.LENGTH_LONG).show()
             }
+        }
+
+        // Handle date format selector spinner
+        val dateFormSelector = findViewById<MaterialSpinner>(R.id.dateFormSpinner)
+        dateFormSelector.setItems(mostUsedDateForms)
+        if (sharedPref?.contains("prefferedDateForm")!! &&
+            mostUsedDateForms.contains(sharedPref?.getString("prefferedDateForm", "dd.MM.yyyy"))) {
+            val prefDateFormPattIndex = mostUsedDateForms.indexOf(
+                sharedPref?.getString("prefferedDateForm", "dd.MM.yyyy"))
+            dateFormSelector.selectedIndex = prefDateFormPattIndex
+        } else {
+            dateFormSelector.selectedIndex = 0
+        }
+        dateFormSelector.setOnItemSelectedListener { _, _, _, item ->
+            sharedPref?.edit()?.putString("prefferedDateForm", item as String)?.commit()
+            Toast.makeText(applicationContext, "Selected \"$item\" date format", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -141,6 +169,10 @@ class SettingsActivity : AppCompatActivity(), BillingProcessor.IBillingHandler {
         if (bp?.isPurchased(PRODUCT_ID)!!) {
             isAppPro = true
             proExpView?.collapse()
+
+            tvWordNumTitle?.setTextColor(resources.getColor(R.color.colorSettingsPaid))
+            stopWordTitle?.setTextColor(resources.getColor(R.color.colorSettingsPaid))
+            addStopWordButton?.setTextColor(resources.getColor(R.color.colorSettingsPaid))
         }
     }
 

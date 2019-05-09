@@ -1,6 +1,7 @@
 package app.mordred.whatscloud.view
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Color
 import android.net.Uri
@@ -37,6 +38,7 @@ class ResultActivity : AppCompatActivity() {
     var pieChart: PieChart? = null
     var chatTitleTv: TextView? = null
     var chatMsgCountTv: TextView? = null
+    var chatMsgWordCountTv: TextView? = null
     var chatMsgFreqTv: TextView? = null
     var chatWdImgView: ImageView? = null
     var chatTitleDropDownInd: ImageView? = null
@@ -59,6 +61,8 @@ class ResultActivity : AppCompatActivity() {
 
     var analyzer: Analyzer? = null
 
+    var shPref: SharedPreferences? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result)
@@ -76,15 +80,20 @@ class ResultActivity : AppCompatActivity() {
         chatTitleHeader?.visibility = View.INVISIBLE
         chatTitleTv = findViewById(R.id.chatTv)
         chatMsgCountTv = findViewById(R.id.tv_chat_msgcount)
+        chatMsgWordCountTv = findViewById(R.id.tv_chat_msgwordcount)
         chatMsgFreqTv = findViewById(R.id.tv_chat_msgfreq)
         chatWdImgView = findViewById(R.id.chatWdImg)
 
         //barchart
         barChart = findViewById(R.id.chart)
+        barChart?.setDescriptionTextSize(16f)
+        barChart?.xAxis?.textSize = 16f
 
         //horizontal barchart
         hrzBarChart = findViewById(R.id.horizontalBarChart)
+        hrzBarChart?.setDescriptionTextSize(16f)
         val xAxis = hrzBarChart?.xAxis
+        xAxis?.textSize = 16f
         xAxis?.setDrawGridLines(false)
         xAxis?.textColor = Color.WHITE
         xAxis?.position = XAxis.XAxisPosition.BOTTOM
@@ -93,6 +102,7 @@ class ResultActivity : AppCompatActivity() {
 
         //piechart
         pieChart = findViewById(R.id.piechart)
+        pieChart?.setDescriptionTextSize(16f)
         pieChart?.setUsePercentValues(true)
 
         chatUsrListRecyclerView = findViewById(R.id.chat_userlist_recyclerview)
@@ -164,9 +174,9 @@ class ResultActivity : AppCompatActivity() {
         barChart?.visibility = View.INVISIBLE
 
         // Get default values from sharedpref
-        val shPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
-        customStopWordList = shPref.getStringSet("custStpWrds", mutableSetOf())
-        customWordCloudWordCount = shPref.getInt("defWordCntInWd", 30)
+        shPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        customStopWordList = shPref?.getStringSet("custStpWrds", mutableSetOf())
+        customWordCloudWordCount = shPref?.getInt("defWordCntInWd", 30)!!
 
 
         if (intent != null && intent?.extras != null && intent?.extras?.getBoolean("isTestAnalyzer",

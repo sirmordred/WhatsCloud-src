@@ -47,16 +47,14 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     var chat: Chat? = null
     val resultUserList: ArrayList<UserListItem> = ArrayList()
     var chatMsgCount: Int = 0
+    var chatMsgWordCount: Int = 0
     var chatMsgFreq: Int = 0
     var chatTitle: String = "WhatsApp Chat"
     val cal: Calendar = Calendar.getInstance()
 
-    val availableDateFormats = arrayOf(
-        SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH),
-        SimpleDateFormat("dd/MM/yy", Locale.ENGLISH),
-        SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH),
-        SimpleDateFormat("dd.MM.yy", Locale.ENGLISH)
-    )
+    var msgDateFormat: SimpleDateFormat? = null
+
+    val availableDateFormPatterns = arrayOf("dd.MM.yyyy", "dd/MM/yy", "dd/MM/yyyy", "dd.MM.yy")
 
     override fun onPreExecute() {
         pd.setTitle(activity.getString(R.string.main_dialog_title))
@@ -88,32 +86,20 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
             val sizeOfWpFile = inpStream.available()
             var sizeOfLine = 0L
 
-            var msgDateFormat: SimpleDateFormat? = null
-
             val bf = BufferedReader(InputStreamReader(inpStream))
             try {
                 var currLine: String? = bf.readLine()
                 while (currLine != null) {
                     if (currLine.length > 18) {
                         try {
-                            if (msgDateFormat == null) {
-                                for (dateFormat in availableDateFormats) {
-                                    try {
-                                        dateFormat.parse(currLine.substring(0, currLine.indexOf(' ')))
-                                        msgDateFormat = dateFormat
-                                        break
-                                    } catch (ex: ParseException) {
-                                        // empty handler
-                                    }
-                                }
-                            }
+                            detectAndSaveDateFormat(currLine.substring(0, currLine.indexOf(' ')))
 
                             val str: String = currLine.substring(currLine.indexOf('-') + 2, currLine.length)
                             val msgTextDelimIndex = str.indexOf(':')
                             val msgText = str.substring(msgTextDelimIndex + 2, str.length)
                             if (!msgText.startsWith('<') && !msgText.startsWith("http")) {
                                 val msgDate: Date = if (msgDateFormat != null) {
-                                    msgDateFormat.parse(currLine.substring(0, currLine.indexOf(' ')))
+                                    msgDateFormat?.parse(currLine.substring(0, currLine.indexOf(' ')))!!
                                 } else {
                                     Calendar.getInstance().time
                                 }
@@ -158,6 +144,9 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                 // Calculate chat msg total count
                 chatMsgCount = chat?.chatTotalMsgCount!!
 
+                // Calculate chat msg word total count
+                chatMsgWordCount = chat?.chatTotalWordCount!!
+
                 // Calculate chat msg freq
                 val diffInMilliesChat = Math.abs(chat?.chatLastMsgDate?.time!! - chat?.chatFirstMsgDate?.time!!)
                 var diffInDaysChat = TimeUnit.DAYS.convert(diffInMilliesChat, TimeUnit.MILLISECONDS).toFloat()
@@ -197,6 +186,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     val usrHrzBarDataSet = BarDataSet(usrHrzBarEntries, "Results")
                     usrHrzBarDataSet.setColors(ColorTemplate.LIBERTY_COLORS)
                     val usrHrzBarData = BarData(usrTopDates.keys.toTypedArray(), usrHrzBarDataSet)
+                    usrHrzBarData.setValueTextSize(16f)
 
                     //Generate user msg day piechart
                     val usrPieEntries: MutableList<Entry> = mutableListOf()
@@ -210,12 +200,14 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                     usrPieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS)
                     val usrPieData = PieData(userObject.usrDayCountMap.keys.toTypedArray(), usrPieDataSet)
                     usrPieData.setValueFormatter(PercentFormatter())
+                    usrPieData.setValueTextSize(16f)
 
                     val wdUserBmp = wdUser.generate()
                     if (wdUserBmp != null) {
                         resultUserList.add(UserListItem(
                             userName,
                             userObject.usrMsgCount,
+                            userObject.usrWordCount,
                             userobjectMsgFreq,
                             placeWpBackground(activity, "wp_bg.png", wdUserBmp),
                             usrHrzBarData, usrPieData))
@@ -230,6 +222,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
 
                 // generate bardata and return
                 barData = BarData(chat?.getUserNameList(), barDataSet)
+                barData?.setValueTextSize(16f)
 
                 //GENERATE HORIZONTAL BARCHART
                 val topDates = sortAndGetTopNVal(chat?.chatDateCountMap!!, 5)
@@ -242,6 +235,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                 hrzBarDataSet = BarDataSet(hrzBarEntries, "Results")
                 hrzBarDataSet?.setColors(ColorTemplate.LIBERTY_COLORS)
                 hrzBarData = BarData(topDates.keys.toTypedArray(), hrzBarDataSet)
+                hrzBarData?.setValueTextSize(16f)
 
                 // GENERATE PIECHART
                 count = 0
@@ -254,6 +248,7 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
                 pieDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS)
                 pieData = PieData(chat?.chatDayCountMap?.keys?.toTypedArray(), pieDataSet)
                 pieData?.setValueFormatter(PercentFormatter())
+                pieData?.setValueTextSize(16f)
                 return true
             }
         }
@@ -285,6 +280,8 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
 
             activity.chatMsgCountTv?.text = String.format(activity.getString(R.string.msg_count_label),
                 chatMsgCount.toString())
+            activity.chatMsgWordCountTv?.text = String.format(activity.getString(R.string.msgword_count_label),
+                chatMsgWordCount.toString())
             activity.chatMsgFreqTv?.text = String.format(activity.getString(R.string.msg_freq_label),
                 chatMsgFreq.toString())
             activity.chatWdImgView?.setImageBitmap(chat?.chatCommonWordCloud)
@@ -317,6 +314,28 @@ class Analyzer(private var activity: ResultActivity) : AsyncTask<Uri, Int, Boole
     fun dismissProgressDialog() {
         if (pd.isShowing) {
             pd.dismiss()
+        }
+    }
+
+    fun detectAndSaveDateFormat(exampleDateStr: String) {
+        if (msgDateFormat == null) {
+            // Check if sharedpref contains preffered date format, if not initiate auto-detection
+            if (activity.shPref?.contains("prefferedDateForm")!!) {
+                val prefDateFormPattern = activity.shPref?.getString("prefferedDateForm", "dd.MM.yyyy")
+                msgDateFormat = SimpleDateFormat(prefDateFormPattern, Locale.getDefault())
+            } else {
+                for (dateFormat in availableDateFormPatterns) {
+                    try {
+                        val availDateForm = SimpleDateFormat(dateFormat, Locale.getDefault())
+                        availDateForm.parse(exampleDateStr)
+                        msgDateFormat = availDateForm
+                        activity.shPref?.edit()?.putString("prefferedDateForm", dateFormat)?.commit()
+                        break
+                    } catch (ex: ParseException) {
+                        // empty handler
+                    }
+                }
+            }
         }
     }
 

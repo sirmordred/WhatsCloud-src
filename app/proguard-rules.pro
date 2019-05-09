@@ -24,4 +24,5 @@
 -keep class com.github.aakira.expandablelayout.** { *; }
 -keep class com.miguelcatalan.materialsearchview.** { *; }
 -keep class com.anjlab.android.iab.v3.** { *; }
+-keep class com.jaredrummler.materialspinner.** { *; }
 -ignorewarnings

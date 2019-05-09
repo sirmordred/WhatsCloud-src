@@ -29,6 +29,8 @@ class UserListAdapter(private val items : ArrayList<UserListItem>, private val c
         p0.tvUserName?.text = itemsFiltered?.get(p1)?.usrName
         p0.tvUserMsgCount?.text =  String.format(context.getString(R.string.msg_count_label),
             itemsFiltered?.get(p1)?.usrMsgCount.toString())
+        p0.tvUserMsgWordCount?.text =  String.format(context.getString(R.string.msgword_count_label),
+            itemsFiltered?.get(p1)?.usrMsgWordCount.toString())
         p0.tvUserMsgFreq?.text = String.format(context.getString(R.string.msg_freq_label),
             itemsFiltered?.get(p1)?.usrMsgFreq.toString())
         p0.imgvUserWordcloud?.setImageBitmap(itemsFiltered?.get(p1)?.usrWordCloud)
@@ -44,6 +46,7 @@ class UserListAdapter(private val items : ArrayList<UserListItem>, private val c
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val tvUserName = view.tv_username
         val tvUserMsgCount = view.tv_user_msgcount
+        val tvUserMsgWordCount = view.tv_user_msgwordcount
         val tvUserMsgFreq = view.tv_user_msgfreq
         val imgvUserWordcloud = view.imgv_user_wordcloud
         val hrzChartUserDateStat = view.usrHrzBarChart
@@ -51,12 +54,14 @@ class UserListAdapter(private val items : ArrayList<UserListItem>, private val c
 
         init {
             val xAxis = hrzChartUserDateStat.xAxis
+            xAxis.textSize = 16f
             xAxis.setDrawGridLines(false)
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             xAxis.isEnabled = true
             xAxis.setDrawAxisLine(false)
 
             pieChartUserDayStat.setUsePercentValues(true)
+            pieChartUserDayStat?.setDescriptionTextSize(16f)
         }
     }
 

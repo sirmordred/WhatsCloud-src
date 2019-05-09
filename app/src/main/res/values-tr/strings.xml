@@ -22,6 +22,7 @@
         Reklamsız\n\u2022 Wordcloud kelime sayısını ayarlama desteği\n\u2022 Filtre kelime ekleme desteği
     </string>
     <string name="pro_upgrade_label">Şimdi güncelle %1$s</string>
+    <string name="dateformat_label">Tarih gösterim biçimi</string>
     <string name="numof_word_label">Wordcloud\'daki kelime sayısı</string>
     <string name="stopword_title">Filtrelenecek kelimeler</string>
     <string name="stopword_hint">Filtrelenecek kelimenizi buraya girin</string>
@@ -39,6 +40,7 @@
     <string name="dialog_no_label">Hayır</string>
     <string name="dialog_exit_title">Çıkmak istediğinizden emin misiniz?</string>
     <string name="msg_count_label">Toplam mesaj sayısı: %1$s</string>
+    <string name="msgword_count_label">Toplam kelime sayısı: %1$s</string>
     <string name="msg_freq_label">Mesaj gönderme sıklığı: %1$s Msg/Gün</string>
     <string name="main_dialog_title">Analiz ediliyor</string>
     <string name="main_dialog_desc">Lütfen bekleyin…</string>
